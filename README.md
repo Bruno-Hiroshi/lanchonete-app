@@ -76,6 +76,7 @@ Estrutura construída seguindo os princípios da Clean Architecture:
 - **Clean Architecture** para isolamento de camadas.
 - **Factory Pattern** para criação das entidades `Pedido` e `Historico`.
 - **Facade Pattern** para centralização das operações de alto nível.
+- **Strategy Pattern** para encapsular diferentes regras de negócio.
 - **Repository Pattern** para abstração de banco de dados.
 - **Use Cases** para organização dos fluxos de negócio.
 
