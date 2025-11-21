@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fatec.lanchoneteapp.TelaPedidoController">
+
+    <center>
+        <VBox spacing="15" padding="20">
+            <Label text="Cadastro de Pedido" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+            <!-- CAMPOS DO PEDIDO -->
+            <GridPane hgap="10" vgap="10">
+                <Label text="Número do Pedido:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNumPedido" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
+
+                <Label text="Valor Total:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtValorTotal" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpData" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Status:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbStatus" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Cliente:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbCliente" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- BOTÕES -->
+            <HBox spacing="10">
+                <Button text="Salvar" fx:id="btnSalvar" prefWidth="100"/>
+                <Button text="Atualizar" fx:id="btnAtualizar" prefWidth="100"/>
+                <Button text="Excluir" fx:id="btnExcluir" prefWidth="100"/>
+                <Button text="Limpar" fx:id="btnLimpar" prefWidth="100"/>
+            </HBox>
+
+            <!-- HISTÓRICO DE PEDIDOS -->
+            <Label text="Pedidos Cadastrados" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+            <TableView fx:id="tblPedidos" prefHeight="300">
+                <columns>
+                    <TableColumn text="Nº Pedido" fx:id="colNumPedido"/>
+                    <TableColumn text="Cliente" fx:id="colCliente"/>
+                    <TableColumn text="Data" fx:id="colData"/>
+                    <TableColumn text="Status" fx:id="colStatus"/>
+                    <TableColumn text="Valor Total" fx:id="colValorTotal"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.TelaCadastroFuncionarioController">
+    <center>
+        <VBox spacing="10" padding="20">
+            <Label text="Cadastro de Funcionário" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+
+                <Label text="Telefone:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTelefone" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+
+                <Label text="Data de Contrato:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpDataContrato" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+
+                <Label text="Cargo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbCargo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+
+            <HBox spacing="10">
+                <Button text="Salvar" fx:id="btnSalvar" prefWidth="100"/>
+                <Button text="Atualizar" fx:id="btnAtualizar" prefWidth="100"/>
+                <Button text="Excluir" fx:id="btnExcluir" prefWidth="100"/>
+                <Button text="Limpar" fx:id="btnLimpar" prefWidth="100"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
