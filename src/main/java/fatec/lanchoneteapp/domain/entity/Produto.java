@@ -7,6 +7,15 @@ public class Produto {
     private double valorUn;
     private Categoria categoria;
 
+    public Produto() {
+        super();
+    }
+
+    public Produto(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -36,5 +45,9 @@ public class Produto {
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public void atualizarQtdEstoque(int qtdCompra) {
+        qntdEstoq -= qtdCompra;
     }
 }

@@ -57,7 +57,7 @@ public interface PedidoFacade {
      * @param qtdEstoque a quantidade do produto a ser adicionada ao pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO adicionarProduto(int nPedido, int produtoId, int qtdEstoque) throws SQLException;
+    PedidoDTO adicionarProduto(int nPedido, int produtoId, int qtdEstoque) throws SQLException, IllegalArgumentException;
 
     /**
      * Remove um produto de um pedido existente com base no ID do pedido e no ID do produto.

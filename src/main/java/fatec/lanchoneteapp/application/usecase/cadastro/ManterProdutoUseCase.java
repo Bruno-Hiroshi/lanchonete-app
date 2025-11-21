@@ -1,4 +1,4 @@
 package fatec.lanchoneteapp.application.usecase.cadastro;
 
-public class ManterProdutos {
+public class ManterProdutoUseCase {
 }

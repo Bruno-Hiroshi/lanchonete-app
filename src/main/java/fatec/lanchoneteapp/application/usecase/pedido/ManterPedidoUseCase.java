@@ -10,9 +10,6 @@ import java.util.List;
 
 public class ManterPedidoUseCase {
     public void criarPedido(Pedido pedido, Cliente cliente, List<ItemPedido> itensPedido) {
-        double valorTotal = 0;
-
-        pedido.setValorTotal(valorTotal);
         pedido.setItensPedido(itensPedido);
         pedido.setData(LocalDate.now());
         pedido.setStatus("Criado");
@@ -21,11 +18,16 @@ public class ManterPedidoUseCase {
         pedido.calcularValorTotal();
     }
 
-    public void adicionarItem(Pedido pedido, Produto produto, ItemPedido item) {
+    public void adicionarItem(Pedido pedido, Produto produto, ItemPedido item) throws IllegalArgumentException{
+        if(item.getQtd() > produto.getQntdEstoq()){
+            throw new IllegalArgumentException("Quantidade insuficiente no estoque");
+        }
+
         item.setValorUnit(produto.getValorUn());
         item.calcularValorTotal();
 
         pedido.adicionarItem(item);
+        produto.atualizarQtdEstoque(item.getQtd());
     }
 
     public void removerItem(Pedido pedido, ItemPedido item) {

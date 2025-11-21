@@ -74,13 +74,14 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public PedidoDTO adicionarProduto(int nPedido, int idProduto, int qtd) throws SQLException {
+    public PedidoDTO adicionarProduto(int nPedido, int idProduto, int qtd) throws SQLException, IllegalArgumentException {
         Pedido pedido = pedidoService.buscarPedido(nPedido);
         Produto produto = produtoService.buscarProduto(idProduto);
         ItemPedido item = new ItemPedido(nPedido, idProduto, qtd);
 
         manterPedidoUC.adicionarItem(pedido, produto, item);
 
+        produtoService.atualizarProduto(produto);
         itemPedidoService.adicionarItem(item);
         pedidoService.atualizarPedido(pedido);
         return mapper.toDTO(pedido);
