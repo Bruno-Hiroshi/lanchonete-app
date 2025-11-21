@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="fatec.lanchoneteapp.TelaItemPedidoController">
+
+    <center>
+        <VBox spacing="12" padding="20">
+
+            <Label text="Cadastro de Item do Pedido" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Nº Pedido:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNumPedido" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="ID Produto:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtIdProduto" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Quantidade:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtQtd" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Valor Unitário:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtValorUnit" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Valor Total:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtValorTotal" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="10">
+                <Button text="Salvar" fx:id="btnSalvar" prefWidth="90"/>
+                <Button text="Atualizar" fx:id="btnAtualizar" prefWidth="90"/>
+                <Button text="Excluir" fx:id="btnExcluir" prefWidth="90"/>
+                <Button text="Limpar" fx:id="btnLimpar" prefWidth="90"/>
+            </HBox>
+
+            <TableView fx:id="tblItens" prefHeight="250">
+                <columns>
+                    <TableColumn text="Pedido" fx:id="colPedido"/>
+                    <TableColumn text="Produto" fx:id="colProduto"/>
+                    <TableColumn text="Qtd" fx:id="colQtd"/>
+                    <TableColumn text="Valor Unit" fx:id="colValorUnit"/>
+                    <TableColumn text="Valor Total" fx:id="colValorTotal"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>
