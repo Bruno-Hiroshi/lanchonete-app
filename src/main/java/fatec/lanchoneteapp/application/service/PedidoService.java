@@ -1,6 +1,7 @@
 package fatec.lanchoneteapp.application.service;
 
 import fatec.lanchoneteapp.adapters.repository.PedidoRepository;
+import fatec.lanchoneteapp.domain.entity.Cliente;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Pedido;
 
@@ -59,5 +60,16 @@ public class PedidoService {
      */
     public List<Pedido> listarPedidos() throws SQLException {
         return pedidoRepository.listar();
+    }
+
+    /**
+     * Recupera o histórico de pedidos de um cliente específico.
+     *
+     * @param cliente O cliente cujo histórico de pedidos será recuperado.
+     * @return Uma lista de objetos Pedido representando o histórico de pedidos do cliente.
+     * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
+     */
+    public List<Pedido> listarHistorico(Cliente cliente) throws SQLException {
+        return pedidoRepository.historicoPedidos(cliente);
     }
 }

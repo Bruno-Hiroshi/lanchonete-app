@@ -97,7 +97,7 @@ public interface PedidoFacade {
      * @param nPedido o ID do pedido cujo histórico será listado
      * @return uma lista de objetos HistoricoDTO representando as entradas no histórico do pedido
      */
-    List<HistoricoDTO> listarHistorico(int nPedido);
+    List<HistoricoDTO> listarHistorico(int nPedido) throws SQLException;
 
 
 }

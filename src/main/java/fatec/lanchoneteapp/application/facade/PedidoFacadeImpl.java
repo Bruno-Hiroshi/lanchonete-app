@@ -122,7 +122,9 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public List<HistoricoDTO> listarHistorico(int nPedido) {
-        return List.of();
+    public List<HistoricoDTO> listarHistorico(int idCliente) throws SQLException {
+        return pedidoService.listarHistorico(new Cliente(idCliente)).stream()
+                .map(mapper::toHistoricoDTO)
+                .toList();
     }
 }
