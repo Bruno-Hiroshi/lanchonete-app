@@ -1,17 +1,34 @@
 package fatec.lanchoneteapp.domain.entity;
 
 public class ItemPedido {
-    private int NumPedido;
-    private int IdProduto;
+    private int nPedido;
+    private int idProduto;
     private int qtd;
     private double valorUnit;
     private double valorTotal;
 
+    public ItemPedido() {
+        super();
+    }
+
+    public ItemPedido(int nPedido, int idProduto) {
+        super();
+        this.nPedido = nPedido;
+        this.idProduto = idProduto;
+    }
+
+    public ItemPedido(int nPedido, int idProduto, int qtd) {
+        super();
+        this.nPedido = nPedido;
+        this.idProduto = idProduto;
+        this.qtd = qtd;
+    }
+
     public int getNumPedido() {
-        return NumPedido;
+        return nPedido;
     }
     public int getIdProduto() {
-        return IdProduto;
+        return idProduto;
     }
     public int getQtd() {
         return qtd;
@@ -22,11 +39,11 @@ public class ItemPedido {
     public double getValorTotal() {
         return valorTotal;
     }
-    public void setNumPedido(int numPedido) {
-        NumPedido = numPedido;
+    public void setNumPedido(int nPedido) {
+        this.nPedido = nPedido;
     }
     public void setIdProduto(int idProduto) {
-        IdProduto = idProduto;
+        this.idProduto = idProduto;
     }
     public void setQtd(int qtd) {
         this.qtd = qtd;

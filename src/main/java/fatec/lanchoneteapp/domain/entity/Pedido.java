@@ -11,6 +11,15 @@ public class Pedido {
     private String status;
     private Cliente cliente;
 
+    public Pedido(){
+
+    }
+
+    public Pedido(int nPedido){
+        super();
+        this.nPedido = nPedido;
+    }
+
     public int getnPedido() {
         return nPedido;
     }
@@ -52,6 +61,22 @@ public class Pedido {
         for (ItemPedido item : itensPedido) {
             this.valorTotal += item.getValorTotal();
         }
+    }
+
+    public void adicionarItem(ItemPedido item) {
+        itensPedido.add(item);
+    }
+
+    public void removerItem(ItemPedido item) {
+        itensPedido.remove(item);
+    }
+
+    public void atualizarQuantidadeItem(ItemPedido item, int novaQtd) {
+        item.setQtd(novaQtd);
+    }
+
+    public void atualizarStatus(String novoStatus) {
+        setStatus(novoStatus);
     }
 }
 

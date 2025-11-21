@@ -2,8 +2,9 @@ package fatec.lanchoneteapp.application.facade;
 
 import fatec.lanchoneteapp.application.dto.HistoricoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
-import fatec.lanchoneteapp.application.dto.ProdutoDTO;
+import fatec.lanchoneteapp.domain.entity.ItemPedido;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PedidoFacade {
@@ -15,43 +16,35 @@ public interface PedidoFacade {
      * Cria um novo pedido para um cliente específico com uma lista de produtos.
      *
      * @param clienteId o ID do cliente para quem o pedido está sendo criado
-     * @param produtos  a lista de produtos a serem incluídos no pedido
+     * @param itensPedido  a lista de itens a serem incluídos no pedido
      * @return os detalhes do pedido criado encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO criarPedido(Long clienteId, List<ProdutoDTO> produtos);
+    PedidoDTO criarPedido(int clienteId, List<ItemPedido> itensPedido) throws SQLException;
 
     /**
      * Busca os detalhes de um pedido específico com base no seu ID.
      *
-     * @param pedidoId o ID do pedido a ser buscado
+     * @param nPedido o ID do pedido a ser buscado
      * @return os detalhes do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO buscarPedido(Long pedidoId);
+    PedidoDTO buscarPedido(int nPedido) throws SQLException;
 
     /**
      * Lista todos os pedidos cadastrados no sistema.
      *
      * @return uma lista de objetos PedidoDTO representando os pedidos existentes
      */
-    List<PedidoDTO> listarPedidos();
+    List<PedidoDTO> listarPedidos() throws SQLException;
 
-    // Atualizar dados gerais do pedido
-    /**
-     * Atualiza as informações de um pedido específico, permitindo adicionar ou alterar uma observação associada a ele.
-     *
-     * @param pedidoId o ID do pedido a ser atualizado
-     * @param observacao a nova observação a ser associada ao pedido
-     * @return os detalhes do pedido atualizado encapsulados em um objeto PedidoDTO
-     */
-    PedidoDTO atualizarPedido(Long pedidoId, String observacao);
 
     // Cancelar
     /**
      * Cancela um pedido existente com base no seu ID único.
      *
-     * @param pedidoId o ID do pedido a ser cancelado
+     * @param nPedido o ID do pedido a ser cancelado
+     * @return
      */
-    void cancelarPedido(Long pedidoId);
+    PedidoDTO cancelarPedido(int nPedido) throws SQLException;
 
 
     // --- ITENS DO PEDIDO ---
@@ -59,52 +52,52 @@ public interface PedidoFacade {
     /**
      * Adiciona um produto a um pedido existente com a quantidade especificada.
      *
-     * @param pedidoId   o ID do pedido ao qual o produto será adicionado
+     * @param nPedido   o ID do pedido ao qual o produto será adicionado
      * @param produtoId  o ID do produto que será adicionado ao pedido
-     * @param quantidade a quantidade do produto a ser adicionada ao pedido
+     * @param qtdEstoque a quantidade do produto a ser adicionada ao pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO adicionarProduto(Long pedidoId, Long produtoId, int quantidade);
+    PedidoDTO adicionarProduto(int nPedido, int produtoId, int qtdEstoque) throws SQLException;
 
     /**
      * Remove um produto de um pedido existente com base no ID do pedido e no ID do produto.
      *
-     * @param pedidoId  o ID do pedido do qual o produto será removido
+     * @param nPedido o ID do pedido do qual o produto será removido
      * @param produtoId o ID do produto a ser removido do pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO removerProduto(Long pedidoId, Long produtoId);
+    PedidoDTO removerProduto(int nPedido, int produtoId) throws SQLException;
 
     /**
      * Atualiza a quantidade de um produto específico em um pedido existente.
      *
-     * @param pedidoId       o ID do pedido no qual a quantidade do produto será atualizada
+     * @param nPedido        o ID do pedido no qual a quantidade do produto será atualizada
      * @param produtoId      o ID do produto cuja quantidade será alterada
      * @param novaQuantidade a nova quantidade a ser definida para o produto no pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO atualizarQuantidadeProduto(Long pedidoId, Long produtoId, int novaQuantidade);
+    PedidoDTO atualizarQuantidadeProduto(int nPedido, int produtoId, int novaQuantidade) throws SQLException;
 
     // --- STATUS ---
 
     /**
      * Atualiza o status de um pedido existente com base no seu ID único.
      *
-     * @param pedidoId   o ID do pedido cujo status será atualizado
+     * @param nPedido o ID do pedido cujo status será atualizado
      * @param novoStatus o novo status a ser atribuído ao pedido
      * @return os detalhes do pedido atualizado encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO atualizarStatus(Long pedidoId, String novoStatus);
+    PedidoDTO atualizarStatus(int nPedido, String novoStatus) throws SQLException;
 
     // --- HISTÓRICO ---
 
     /**
      * Lista o histórico de alterações ou eventos relacionados a um pedido específico.
      *
-     * @param pedidoId o ID do pedido cujo histórico será listado
+     * @param nPedido o ID do pedido cujo histórico será listado
      * @return uma lista de objetos HistoricoDTO representando as entradas no histórico do pedido
      */
-    List<HistoricoDTO> listarHistorico(Long pedidoId);
+    List<HistoricoDTO> listarHistorico(int nPedido);
 
 
 }
