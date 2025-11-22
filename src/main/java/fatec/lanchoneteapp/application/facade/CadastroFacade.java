@@ -3,8 +3,15 @@ package fatec.lanchoneteapp.application.facade;
 import fatec.lanchoneteapp.application.dto.*;
 import fatec.lanchoneteapp.domain.entity.*;
 
-import java.time.LocalDate;
+import java.sql.SQLException;
+import java.util.List;
 
+/**
+ * Interface CadastroFacade define os métodos para gerenciar operações
+ * relacionadas a clientes, funcionários, cargos, produtos e categorias
+ * dentro do sistema. Esta interface abstrai as funcionalidades de criação,
+ * leitura, atualização e remoção (CRUD) para cada um desses componentes.
+ */
 public interface CadastroFacade {
 
     //CLIENTE
@@ -12,10 +19,9 @@ public interface CadastroFacade {
      * Cria um novo cliente no sistema com base nos dados fornecidos.
      *
      * @param cliente um objeto ClienteDTO contendo as informações do cliente a ser criado
-     * @return um objeto ClienteDTO representando o cliente criado com suas informações atualizadas
      */
 
-    ClienteDTO novoCliente(ClienteDTO cliente);
+    void novoCliente(ClienteDTO cliente) throws SQLException;
 
     /**
      * Busca os detalhes de um cliente específico com base no seu ID.
@@ -23,23 +29,28 @@ public interface CadastroFacade {
      * @param idCliente o ID do cliente a ser buscado
      * @return os detalhes do cliente encapsulados em um objeto ClienteDTO
      */
-    ClienteDTO buscarCliente(int idCliente);
+    ClienteDTO buscarCliente(int idCliente) throws SQLException;
 
     /**
      * Atualiza os dados de um cliente existente no sistema.
      *
      * @param cliente um objeto ClienteDTO contendo os dados atualizados do cliente
-     * @return um objeto ClienteDTO representando o cliente com suas informações atualizadas
      */
-    ClienteDTO atualizarCliente(ClienteDTO cliente);
+    void atualizarCliente(ClienteDTO cliente) throws SQLException;
 
     /**
      * Remove um cliente do sistema com base no seu ID.
      *
      * @param idCliente o ID do cliente a ser removido
-     * @return os detalhes do cliente removido encapsulados em um objeto ClienteDTO
      */
-    ClienteDTO removerCliente(int idCliente);
+    void removerCliente(int idCliente) throws SQLException;
+
+    /**
+     * Retorna uma lista de todos os clientes cadastrados no sistema.
+     *
+     * @return uma lista contendo os objetos ClienteDTO representando os clientes cadastrados
+     */
+    List<ClienteDTO> listarClientes() throws SQLException;
 
     //FUNCIONARIO
     /**
@@ -71,6 +82,13 @@ public interface CadastroFacade {
      */
     Funcionario removerFuncionario(int idFuncionario);
 
+    /**
+     * Retorna uma lista de todos os funcionários cadastrados no sistema.
+     *
+     * @return uma lista de objetos FuncionarioDTO representando os funcionários cadastrados
+     */
+    List<FuncionarioDTO> listarFuncionarios();
+
     //CARGO
     /**
      * Cria um novo cargo com base nas informações fornecidas.
@@ -101,6 +119,13 @@ public interface CadastroFacade {
      */
     CargoDTO removerCargo(int idCargo);
 
+    /**
+     * Retorna uma lista de todos os cargos cadastrados no sistema.
+     *
+     * @return uma lista de objetos CargoDTO representando os cargos cadastrados
+     */
+    List<CargoDTO> listarCargos();
+
     //PRODUTO
     /**
      * Registra um novo produto no sistema.
@@ -130,6 +155,13 @@ public interface CadastroFacade {
      * @return um objeto ProdutoDTO representando o produto removido
      */
     ProdutoDTO removerProduto(int idProduto);
+
+    /**
+     * Retorna uma lista de todos os produtos cadastrados no sistema.
+     *
+     * @return uma lista de objetos ProdutoDTO representando os produtos cadastrados
+     */
+    List<ProdutoDTO> listarProdutos();
 
     //CATEGORIA
     /**
@@ -163,4 +195,11 @@ public interface CadastroFacade {
      * @return os detalhes da categoria removida encapsulados em um objeto CategoriaDTO
      */
     CategoriaDTO removerCategoria(int idCategoria);
+
+    /**
+     * Retorna uma lista de todas as categorias cadastradas no sistema.
+     *
+     * @return uma lista de objetos CategoriaDTO representando as categorias cadastradas
+     */
+    List<CategoriaDTO> listarCategorias();
 }
