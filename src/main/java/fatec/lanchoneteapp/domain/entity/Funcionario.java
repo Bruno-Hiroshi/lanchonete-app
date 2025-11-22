@@ -9,6 +9,17 @@ public class Funcionario {
     private LocalDate dataContrato;
     private Cargo cargo;
 
+    public Funcionario(){}
+    public Funcionario(int id) {
+        this.id = id;
+    }
+    public Funcionario(String nome, String tel, LocalDate dataContrato, Cargo cargo) {
+        this.nome = nome;
+        this.tel = tel;
+        this.dataContrato = dataContrato;
+        this.cargo = cargo;
+    }
+
     public int getId() {
         return id;
     }

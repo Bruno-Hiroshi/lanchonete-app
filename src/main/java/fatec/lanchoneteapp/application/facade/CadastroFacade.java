@@ -1,7 +1,6 @@
 package fatec.lanchoneteapp.application.facade;
 
 import fatec.lanchoneteapp.application.dto.*;
-import fatec.lanchoneteapp.domain.entity.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -57,37 +56,34 @@ public interface CadastroFacade {
      * Registra um novo funcionário no sistema.
      *
      * @param funcionario um objeto FuncionarioDTO representando os dados do novo funcionário a ser registrado
-     * @return o objeto FuncionarioDTO atualizado com os detalhes do funcionário registrado, incluindo o ID gerado
      */
-    FuncionarioDTO novoFuncionario(FuncionarioDTO funcionario);
+    void novoFuncionario(FuncionarioDTO funcionario) throws SQLException;
     /**
      * Busca os detalhes de um funcionário específico com base no seu ID.
      *
      * @param idFuncionario o ID do funcionário a ser buscado
      * @return os detalhes do funcionário encapsulados em um objeto FuncionarioDTO
      */
-    FuncionarioDTO buscarFuncionario(int idFuncionario);
+    FuncionarioDTO buscarFuncionario(int idFuncionario) throws SQLException;
     /**
      * Atualiza as informações de um funcionário existente com base nos dados fornecidos.
      *
      * @param funcionario o objeto FuncionarioDTO contendo os dados atualizados do funcionário
-     * @return o objeto FuncionarioDTO atualizado após a modificação
      */
-    FuncionarioDTO atualizarFuncionario(FuncionarioDTO funcionario);
+    void atualizarFuncionario(FuncionarioDTO funcionario) throws SQLException;
     /**
      * Remove um funcionário do sistema com base no seu ID.
      *
      * @param idFuncionario o ID único do funcionário a ser removido
-     * @return o funcionário removido encapsulado em um objeto Funcionario, ou null caso não seja encontrado
      */
-    Funcionario removerFuncionario(int idFuncionario);
+    void removerFuncionario(int idFuncionario) throws SQLException;
 
     /**
      * Retorna uma lista de todos os funcionários cadastrados no sistema.
      *
      * @return uma lista de objetos FuncionarioDTO representando os funcionários cadastrados
      */
-    List<FuncionarioDTO> listarFuncionarios();
+    List<FuncionarioDTO> listarFuncionarios() throws SQLException;
 
     //CARGO
     /**

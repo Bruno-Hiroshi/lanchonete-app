@@ -2,8 +2,12 @@ package fatec.lanchoneteapp.application.facade;
 
 import fatec.lanchoneteapp.application.dto.*;
 import fatec.lanchoneteapp.application.exception.ClienteInvalidoException;
+import fatec.lanchoneteapp.application.exception.ClienteNaoEncontradoException;
+import fatec.lanchoneteapp.application.exception.FuncionarioInvalidoException;
 import fatec.lanchoneteapp.application.mapper.ClienteMapper;
+import fatec.lanchoneteapp.application.mapper.FuncionarioMapper;
 import fatec.lanchoneteapp.application.service.ClienteService;
+import fatec.lanchoneteapp.application.service.FuncionarioService;
 import fatec.lanchoneteapp.domain.entity.Cliente;
 import fatec.lanchoneteapp.domain.entity.Funcionario;
 
@@ -15,8 +19,12 @@ public class CadastroFacadeImpl implements CadastroFacade{
     private final ClienteService clienteService;
     private final ClienteMapper clienteMapper = new ClienteMapper();
 
-    public CadastroFacadeImpl(ClienteService clienteService) {
+    private final FuncionarioService funcionarioService;
+    private final FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
+
+    public CadastroFacadeImpl(ClienteService clienteService, FuncionarioService funcionarioService) {
         this.clienteService = clienteService;
+        this.funcionarioService = funcionarioService;
     }
 
     @Override
@@ -26,7 +34,7 @@ public class CadastroFacadeImpl implements CadastroFacade{
     }
 
     @Override
-    public ClienteDTO buscarCliente(int idCliente) throws SQLException {
+    public ClienteDTO buscarCliente(int idCliente) throws SQLException, ClienteNaoEncontradoException {
         return clienteMapper.toDTO(clienteService.buscarCliente(idCliente));
     }
 
@@ -36,7 +44,7 @@ public class CadastroFacadeImpl implements CadastroFacade{
     }
 
     @Override
-    public void removerCliente(int idCliente) throws SQLException {
+    public void removerCliente(int idCliente) throws SQLException, ClienteNaoEncontradoException {
         Cliente cliente = clienteService.buscarCliente(idCliente);
         clienteService.excluirCliente(cliente);
     }
@@ -51,28 +59,32 @@ public class CadastroFacadeImpl implements CadastroFacade{
     //==================================================================================
 
     @Override
-    public FuncionarioDTO novoFuncionario(FuncionarioDTO funcionario) {
-        return null;
+    public void novoFuncionario(FuncionarioDTO funcionarioDTO) throws SQLException, FuncionarioInvalidoException {
+        Funcionario funcionario = funcionarioMapper.toEntity(funcionarioDTO);
+        funcionarioService.criarFuncionario(funcionario);
     }
 
     @Override
-    public FuncionarioDTO buscarFuncionario(int idFuncionario) {
-        return null;
+    public FuncionarioDTO buscarFuncionario(int idFuncionario) throws SQLException, FuncionarioInvalidoException {
+        return funcionarioMapper.toDTO(funcionarioService.buscarFuncionario(idFuncionario));
     }
 
     @Override
-    public FuncionarioDTO atualizarFuncionario(FuncionarioDTO funcionario) {
-        return null;
+    public void atualizarFuncionario(FuncionarioDTO funcionarioDTO) throws SQLException {
+        funcionarioService.atualizarFuncionario(funcionarioMapper.toEntity(funcionarioDTO));
     }
 
     @Override
-    public Funcionario removerFuncionario(int idFuncionario) {
-        return null;
+    public void removerFuncionario(int idFuncionario) throws SQLException, ClienteNaoEncontradoException {
+        Funcionario funcionario = funcionarioService.buscarFuncionario(idFuncionario);
+        funcionarioService.excluirFuncionario(funcionario);
     }
 
     @Override
-    public List<FuncionarioDTO> listarFuncionarios() {
-        return List.of();
+    public List<FuncionarioDTO> listarFuncionarios() throws SQLException {
+        return funcionarioService.listarFuncionarios().stream()
+                .map(funcionarioMapper::toDTO)
+                .toList();
     }
 
     //==================================================================================
