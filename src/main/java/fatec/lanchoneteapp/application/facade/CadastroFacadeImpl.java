@@ -26,15 +26,19 @@ public class CadastroFacadeImpl implements CadastroFacade{
     private final CategoriaService categoriaService;
     private final CategoriaMapper categoriaMapper = new CategoriaMapper();
 
+    private final FornecedorService fornecedorService;
+    private final FornecedorMapper fornecedorMapper = new FornecedorMapper();
+
     public CadastroFacadeImpl(ClienteService clienteService,
                               FuncionarioService funcionarioService,
                               ProdutoService produtoService,
-                              CargoService cargoService, CategoriaService categoriaService) {
+                              CargoService cargoService, CategoriaService categoriaService, FornecedorService fornecedorService) {
         this.clienteService = clienteService;
         this.funcionarioService = funcionarioService;
         this.produtoService = produtoService;
         this.cargoService = cargoService;
         this.categoriaService = categoriaService;
+        this.fornecedorService = fornecedorService;
     }
 
     @Override
@@ -186,6 +190,36 @@ public class CadastroFacadeImpl implements CadastroFacade{
     public List<CategoriaDTO> listarCategorias() throws SQLException {
         return categoriaService.listarCategorias().stream()
                 .map(categoriaMapper::toDTO)
+                .toList();
+    }
+
+    //==================================================================================
+
+    @Override
+    public void novoFornecedor(FornecedorDTO fornecedorDTO) throws SQLException, FornecedorInvalidoException {
+        fornecedorService.criarFornecedor(fornecedorMapper.toEntity(fornecedorDTO));
+    }
+
+    @Override
+    public FornecedorDTO buscarFornecedor(int idFornecedor) throws SQLException, FornecedorNaoEncontradoException {
+        return fornecedorMapper.toDTO(fornecedorService.buscarFornecedor(idFornecedor));
+    }
+
+    @Override
+    public void atualizarFornecedor(FornecedorDTO fornecedorDTO) throws SQLException {
+        fornecedorService.atualizarFornecedor(fornecedorMapper.toEntity(fornecedorDTO));
+    }
+
+    @Override
+    public void removerFornecedor(int idFornecedor) throws SQLException {
+        Fornecedor fornecedor = fornecedorService.buscarFornecedor(idFornecedor);
+        fornecedorService.removerFornecedor(fornecedor);
+    }
+
+    @Override
+    public List<FornecedorDTO> listarFornecedores() throws SQLException {
+        return fornecedorService.listarFornecedores().stream()
+                .map(fornecedorMapper::toDTO)
                 .toList();
     }
 }

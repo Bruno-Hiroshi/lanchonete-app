@@ -189,4 +189,42 @@ public interface CadastroFacade {
      * @return uma lista de objetos CategoriaDTO representando as categorias cadastradas
      */
     List<CategoriaDTO> listarCategorias() throws SQLException;
+
+    //FORNECEDOR
+
+    /**
+     * Registra um novo fornecedor no sistema com base nas informações fornecidas.
+     *
+     * @param fornecedorDTO um objeto FornecedorDTO contendo os dados do novo fornecedor a ser registrado
+     */
+    void novoFornecedor(FornecedorDTO fornecedorDTO) throws SQLException;
+
+    /**
+     * Busca os detalhes de um fornecedor específico com base no seu ID.
+     *
+     * @param idFornecedor o identificador único do fornecedor a ser buscado
+     * @return um objeto FornecedorDTO contendo os detalhes do fornecedor
+     */
+    FornecedorDTO buscarFornecedor(int idFornecedor) throws SQLException;
+
+    /**
+     * Atualiza as informações de um fornecedor existente no sistema.
+     *
+     * @param fornecedorDTO um objeto FornecedorDTO contendo os dados atualizados do fornecedor
+     */
+    void atualizarFornecedor(FornecedorDTO fornecedorDTO) throws SQLException;
+
+    /**
+     * Remove um fornecedor do sistema com base no seu ID.
+     *
+     * @param idFornecedor o ID do fornecedor a ser removido
+     */
+    void removerFornecedor(int idFornecedor) throws SQLException;
+
+    /**
+     * Retorna uma lista de todos os fornecedores cadastrados no sistema.
+     *
+     * @return uma lista de objetos FornecedorDTO representando os fornecedores cadastrados
+     */
+    List<FornecedorDTO> listarFornecedores() throws SQLException;
 }

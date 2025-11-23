@@ -13,6 +13,31 @@ public class Fornecedor {
     private String complemento;
     private List<Produto> produtos;
 
+    public Fornecedor(){}
+    public Fornecedor(int id) {
+        this.id = id;
+    }
+    public Fornecedor(String nome, String tel, String cnpj, String logradouro, int numero, String cep, String complemento) {
+        this.nome = nome;
+        this.tel = tel;
+        this.cnpj = cnpj;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
+    }
+    public Fornecedor(int id, String nome, String tel, String cnpj, String logradouro, int numero, String cep, String complemento, List<Produto> produtos) {
+        this.id = id;
+        this.nome = nome;
+        this.tel = tel;
+        this.cnpj = cnpj;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
+        this.produtos = produtos;
+    }
+
     public int getId() {
         return id;
     }
