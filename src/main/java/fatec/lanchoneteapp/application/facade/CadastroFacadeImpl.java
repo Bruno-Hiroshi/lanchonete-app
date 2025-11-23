@@ -2,18 +2,9 @@ package fatec.lanchoneteapp.application.facade;
 
 import fatec.lanchoneteapp.application.dto.*;
 import fatec.lanchoneteapp.application.exception.*;
-import fatec.lanchoneteapp.application.mapper.CargoMapper;
-import fatec.lanchoneteapp.application.mapper.ClienteMapper;
-import fatec.lanchoneteapp.application.mapper.FuncionarioMapper;
-import fatec.lanchoneteapp.application.mapper.ProdutoMapper;
-import fatec.lanchoneteapp.application.service.CargoService;
-import fatec.lanchoneteapp.application.service.ClienteService;
-import fatec.lanchoneteapp.application.service.FuncionarioService;
-import fatec.lanchoneteapp.application.service.ProdutoService;
-import fatec.lanchoneteapp.domain.entity.Cargo;
-import fatec.lanchoneteapp.domain.entity.Cliente;
-import fatec.lanchoneteapp.domain.entity.Funcionario;
-import fatec.lanchoneteapp.domain.entity.Produto;
+import fatec.lanchoneteapp.application.mapper.*;
+import fatec.lanchoneteapp.application.service.*;
+import fatec.lanchoneteapp.domain.entity.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -32,14 +23,18 @@ public class CadastroFacadeImpl implements CadastroFacade{
     private final CargoService cargoService;
     private final CargoMapper cargoMapper = new CargoMapper();
 
+    private final CategoriaService categoriaService;
+    private final CategoriaMapper categoriaMapper = new CategoriaMapper();
+
     public CadastroFacadeImpl(ClienteService clienteService,
                               FuncionarioService funcionarioService,
                               ProdutoService produtoService,
-                              CargoService cargoService) {
+                              CargoService cargoService, CategoriaService categoriaService) {
         this.clienteService = clienteService;
         this.funcionarioService = funcionarioService;
         this.produtoService = produtoService;
         this.cargoService = cargoService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
@@ -167,27 +162,30 @@ public class CadastroFacadeImpl implements CadastroFacade{
     //==================================================================================
 
     @Override
-    public CategoriaDTO novaCategoria(CategoriaDTO categoria) {
-        return null;
+    public void novaCategoria(CategoriaDTO categoriaDTO) throws SQLException, CategoriaInvalidaException {
+        categoriaService.criarCategoria(categoriaMapper.toEntity(categoriaDTO));
     }
 
     @Override
-    public CategoriaDTO buscarCategoria(int idCategoria) {
-        return null;
+    public CategoriaDTO buscarCategoria(int idCategoria) throws SQLException, CategoriaNaoEncontradaException {
+        return categoriaMapper.toDTO(categoriaService.buscarCategoria(idCategoria));
     }
 
     @Override
-    public CategoriaDTO atualizarCategoria(CategoriaDTO categoria) {
-        return null;
+    public void atualizarCategoria(CategoriaDTO categoriaDTO) throws SQLException {
+        categoriaService.atualizarCategoria(categoriaMapper.toEntity(categoriaDTO));
     }
 
     @Override
-    public CategoriaDTO removerCategoria(int idCategoria) {
-        return null;
+    public void removerCategoria(int idCategoria) throws SQLException {
+        Categoria categoria = categoriaService.buscarCategoria(idCategoria);
+        categoriaService.removerCategoria(categoria);
     }
 
     @Override
-    public List<CategoriaDTO> listarCategorias() {
-        return List.of();
+    public List<CategoriaDTO> listarCategorias() throws SQLException {
+        return categoriaService.listarCategorias().stream()
+                .map(categoriaMapper::toDTO)
+                .toList();
     }
 }

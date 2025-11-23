@@ -158,9 +158,8 @@ public interface CadastroFacade {
      * Cria uma nova categoria no sistema com base nas informações fornecidas.
      *
      * @param categoria um objeto CategoriaDTO contendo os detalhes da nova categoria a ser criada
-     * @return o objeto CategoriaDTO representando a categoria criada
      */
-    CategoriaDTO novaCategoria(CategoriaDTO categoria);
+    void novaCategoria(CategoriaDTO categoria) throws SQLException;
 
     /**
      * Busca uma categoria específica pelo seu ID.
@@ -168,28 +167,26 @@ public interface CadastroFacade {
      * @param idCategoria o identificador único da categoria a ser buscada
      * @return os detalhes da categoria encapsulados em um objeto CategoriaDTO
      */
-    CategoriaDTO buscarCategoria(int idCategoria);
+    CategoriaDTO buscarCategoria(int idCategoria) throws SQLException;
 
     /**
      * Atualiza as informações de uma categoria existente no sistema.
      *
      * @param categoria o objeto CategoriaDTO contendo os dados atualizados da categoria
-     * @return o objeto CategoriaDTO contendo as informações atualizadas da categoria
      */
-    CategoriaDTO atualizarCategoria(CategoriaDTO categoria);
+    void atualizarCategoria(CategoriaDTO categoria) throws SQLException;
 
     /**
      * Remove uma categoria existente com base no seu ID.
      *
      * @param idCategoria o ID da categoria a ser removida
-     * @return os detalhes da categoria removida encapsulados em um objeto CategoriaDTO
      */
-    CategoriaDTO removerCategoria(int idCategoria);
+    void removerCategoria(int idCategoria) throws SQLException;
 
     /**
      * Retorna uma lista de todas as categorias cadastradas no sistema.
      *
      * @return uma lista de objetos CategoriaDTO representando as categorias cadastradas
      */
-    List<CategoriaDTO> listarCategorias();
+    List<CategoriaDTO> listarCategorias() throws SQLException;
 }
