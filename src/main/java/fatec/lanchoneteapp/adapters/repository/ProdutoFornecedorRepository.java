@@ -118,5 +118,41 @@ public class ProdutoFornecedorRepository implements RepositoryNoReturn<ProdutoFo
         ps.close();
         return entidades;
     }
+
+    @Override
+    public ProdutoFornecedor buscarPorChaveSecundaria(ProdutoFornecedor entidade) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT pf.ID_Produto, pf.ID_Fornecedor, ");
+        sql.append("p.Nome AS Nome_Produto, ");
+        sql.append("f.Nome AS Nome_Fornecedor ");
+        sql.append("FROM Produto_Fornecedor pf INNER JOIN Produto p ");
+        sql.append("ON pf.ID_Produto = p.ID ");
+        sql.append("INNER JOIN Fornecedor f ");
+        sql.append("ON pf.ID_Fornecedor = f.ID ");
+        sql.append("WHERE p.Nome LIKE ?% AND f.Nome LIKE ?%");
+        PreparedStatement ps = connection.prepareStatement(sql.toString());
+        ps.setString(1, entidade.getNomeProduto());
+        ps.setString(2, entidade.getNomeFornecedor());
+
+        int cont = 0;
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            entidade.setIdProduto(rs.getInt("ID_Produto"));
+            entidade.setIdFornecedor(rs.getInt("ID_Fornecedor"));
+            entidade.setNomeProduto(rs.getString("Nome_Produto"));
+            entidade.setNomeFornecedor(rs.getString("Nome_Fornecedor"));
+
+            cont++;
+        }
+
+        if(cont == 0){
+            entidade = new ProdutoFornecedor();
+        }
+
+        rs.close();
+        ps.close();
+        return entidade;
+    }
     
 }

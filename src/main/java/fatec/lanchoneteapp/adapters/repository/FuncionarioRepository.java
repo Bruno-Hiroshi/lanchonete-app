@@ -132,7 +132,8 @@ public class FuncionarioRepository implements RepositoryNoReturn<Funcionario> {
         return entidades;
     }
 
-    public Funcionario buscarPorEmail(Funcionario entidade) throws SQLException {
+    @Override
+    public Funcionario buscarPorChaveSecundaria(Funcionario entidade) throws SQLException {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT f.ID AS ID_Func, f.Nome AS Nome_Func, f.Telefone, f.Email, f.DataContrato, ");
         sql.append("c.ID AS ID_Cargo, c.Nome AS Nome_Cargo, c.Salario, c.Descricao ");

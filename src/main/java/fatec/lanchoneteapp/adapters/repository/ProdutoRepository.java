@@ -122,4 +122,42 @@ public class ProdutoRepository implements RepositoryNoReturn<Produto> {
         ps.close();
         return entidades;
     }
+
+    @Override
+    public Produto buscarPorChaveSecundaria(Produto entidade) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT p.ID AS ID_Produto, p.Nome AS Nome_Produto, p.QtdEstoque, p.ValorUnit, ");
+        sql.append("c.ID AS ID_Categoria, c.Nome AS Nome_Categoria, c.Descricao ");
+        sql.append("FROM Produto p INNER JOIN Categoria c ");
+        sql.append("ON p.ID_Categoria = c.ID ");
+        sql.append("WHERE p.Nome LIKE ?%");
+        PreparedStatement ps = connection.prepareStatement(sql.toString());
+        ps.setString(1, entidade.getNome());
+
+        int cont = 0;
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            Categoria categoria = new Categoria();
+            categoria.setId(rs.getInt("ID_Categoria"));
+            categoria.setNome(rs.getString("Nome_Categoria"));
+            categoria.setDescricao(rs.getString("Descricao"));
+
+            entidade.setId(rs.getInt("ID_Produto"));
+            entidade.setNome(rs.getString("Nome_Produto"));
+            entidade.setQntdEstoq(rs.getInt("QtdEstoque"));
+            entidade.setValorUn(rs.getDouble("ValorUnit"));
+            entidade.setCategoria(categoria);
+
+            cont++;
+        }
+
+        if(cont == 0){
+            entidade = new Produto();
+        }
+
+        rs.close();
+        ps.close();
+        return entidade;
+    }
 }

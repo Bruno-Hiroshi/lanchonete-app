@@ -98,4 +98,31 @@ public class CargoRepository implements RepositoryNoReturn<Cargo> {
         ps.close();
         return entidades;
     }
+
+    @Override
+    public Cargo buscarPorChaveSecundaria(Cargo entidade) throws SQLException {
+        String sql = "SELECT ID, Nome, Salario, Descricao FROM Cargo WHERE Nome LIKE ?%";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, entidade.getNome());
+
+        int cont = 0;
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            entidade.setId(rs.getInt("ID"));
+            entidade.setNome(rs.getString("Nome"));
+            entidade.setSalario(rs.getDouble("Salario"));
+            entidade.setDescricao(rs.getString("Descricao"));
+            
+            cont++;
+        }
+
+        if(cont == 0){
+            entidade = new Cargo();
+        }
+
+        rs.close();
+        ps.close();
+        return entidade;
+    }
 }

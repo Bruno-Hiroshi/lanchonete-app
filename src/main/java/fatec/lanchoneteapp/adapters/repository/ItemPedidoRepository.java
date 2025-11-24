@@ -109,5 +109,37 @@ public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
         ps.close();
         return entidades;
     }
-    
+
+    @Override
+    public ItemPedido buscarPorChaveSecundaria(ItemPedido entidade) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT ip.Num_Pedido, ip.ID_Produto, ip.Qtd, ip.ValorUnit, ipValorTotalItem, ");
+        sql.append("p.Nome AS Nome_Produto ");
+        sql.append("FROM ItemPedido ip INNER JOIN Produto p ");
+        sql.append("ON ip.ID_Produto = p.ID ");
+        sql.append("WHERE p.Nome LIKE ?%");
+        PreparedStatement ps = connection.prepareStatement(sql.toString());
+        ps.setString(1, entidade.getNomeProduto());
+
+        int cont = 0;
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            entidade.setNumPedido(rs.getInt("Num_Pedido"));
+            entidade.setIdProduto(rs.getInt("ID_Produto"));
+            entidade.setQtd(rs.getInt("Qtd"));
+            entidade.setValorUnit(rs.getDouble("ValorUnit"));
+            entidade.setValorTotal(rs.getDouble("ValorTotalItem"));
+
+            cont++;
+        }
+
+        if(cont == 0){
+            entidade = new ItemPedido();
+        }
+
+        rs.close();
+        ps.close();
+        return entidade;
+    }
 }

@@ -115,8 +115,9 @@ public class FornecedorRepository implements RepositoryNoReturn<Fornecedor>{
         ps.close();
         return entidades;
     }
-
-    public Fornecedor buscarPorCnpj(Fornecedor entidade) throws SQLException {
+    
+    @Override
+    public Fornecedor buscarPorChaveSecundaria(Fornecedor entidade) throws SQLException {
         String sql = "SELECT ID, Nome, Telefone, CNPJ, Logradouro, Numero, CEP, Complemento FROM Fornecedor WHERE CNPJ = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getCnpj());

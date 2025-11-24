@@ -115,8 +115,9 @@ public class ClienteRepository implements RepositoryNoReturn<Cliente> {
         ps.close();
         return entidades;
     }
-
-    public Cliente buscarPorCpf(Cliente entidade) throws SQLException {
+    
+    @Override
+    public Cliente buscarPorChaveSecundaria(Cliente entidade) throws SQLException {
         String sql = "SELECT ID, Nome, Telefone, CPF, Logradouro, Numero, CEP, Complemento FROM Cliente WHERE CPF = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getCpf());

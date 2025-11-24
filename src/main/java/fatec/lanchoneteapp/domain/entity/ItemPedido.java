@@ -3,6 +3,7 @@ package fatec.lanchoneteapp.domain.entity;
 public class ItemPedido {
     private int nPedido;
     private int idProduto;
+    private String nomeProduto;
     private int qtd;
     private double valorUnit;
     private double valorTotal;
@@ -30,6 +31,9 @@ public class ItemPedido {
     public int getIdProduto() {
         return idProduto;
     }
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
     public int getQtd() {
         return qtd;
     }
@@ -44,6 +48,9 @@ public class ItemPedido {
     }
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
+    }
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
     public void setQtd(int qtd) {
         this.qtd = qtd;
