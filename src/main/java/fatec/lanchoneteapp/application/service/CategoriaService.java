@@ -16,7 +16,7 @@ public class CategoriaService {
     }
 
     public void criarCategoria(Categoria categoria) throws SQLException {
-        if(!validarCategoria(categoria.getId()))
+        if(!validarCategoria(categoria))
             throw new CategoriaInvalidaException("Categoria já cadastrada");
     }
 
@@ -41,13 +41,17 @@ public class CategoriaService {
         return repository.listar();
     }
 
-    //TODO: IMPLEMENTAR BUSCA POR NOME PARA VALIDAÇÃO
-    public boolean validarCategoria(int idCategoria) throws SQLException {
+    public boolean validarCategoria(Categoria categoria) throws SQLException {
         try {
-            buscarCategoria(idCategoria);
-            return false;
-        } catch(CategoriaNaoEncontradaException e) {
+            buscarDuplicata(categoria);
             return true;
+        } catch(CategoriaInvalidaException e) {
+            return false;
         }
+    }
+
+    private void buscarDuplicata(Categoria categoria) throws SQLException, CategoriaInvalidaException{
+        if(repository.buscarPorChaveSecundaria(categoria) != null)
+            throw new CategoriaInvalidaException("Categoria inválida");
     }
 }

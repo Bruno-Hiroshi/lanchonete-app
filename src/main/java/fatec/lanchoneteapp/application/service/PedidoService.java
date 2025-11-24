@@ -1,20 +1,18 @@
 package fatec.lanchoneteapp.application.service;
 
-import fatec.lanchoneteapp.adapters.repository.PedidoRepository;
+import fatec.lanchoneteapp.application.repository.RepositoryReturn;
 import fatec.lanchoneteapp.domain.entity.Cliente;
-import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Pedido;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 public class PedidoService {
 
-    private final PedidoRepository pedidoRepository;
+    private final RepositoryReturn<Pedido> repository;
     
-    public PedidoService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
+    public PedidoService(RepositoryReturn<Pedido> repository) {
+        this.repository = repository;
     }
 
     /**
@@ -25,7 +23,7 @@ public class PedidoService {
      * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
      */
     public int criarPedido(Pedido pedido) throws SQLException {
-        return pedidoRepository.salvar(pedido);
+        return repository.salvar(pedido);
     }
 
     /**
@@ -37,7 +35,7 @@ public class PedidoService {
      * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
      */
     public Pedido buscarPedido(int nPedido) throws SQLException {
-        return pedidoRepository.buscarPorID(new Pedido(nPedido));
+        return repository.buscarPorID(new Pedido(nPedido));
     }
 
     /**
@@ -48,7 +46,7 @@ public class PedidoService {
      * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
      */
     public void atualizarPedido(Pedido pedido) throws SQLException {
-        pedidoRepository.atualizar(pedido);
+        repository.atualizar(pedido);
     }
 
     /**
@@ -59,7 +57,7 @@ public class PedidoService {
      * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
      */
     public List<Pedido> listarPedidos() throws SQLException {
-        return pedidoRepository.listar();
+        return repository.listar();
     }
 
     /**
@@ -69,7 +67,8 @@ public class PedidoService {
      * @return Uma lista de objetos Pedido representando o histórico de pedidos do cliente.
      * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
      */
+    //TODO: CORRIGIR IMPLEMENTAÇÃO
     public List<Pedido> listarHistorico(Cliente cliente) throws SQLException {
-        return pedidoRepository.historicoPedidos(cliente);
+        return List.of();
     }
 }

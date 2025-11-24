@@ -11,9 +11,9 @@ import java.util.List;
 
 public class ClienteService {
 
-    private final ClienteRepository repository;
+    private final RepositoryNoReturn<Cliente> repository;
 
-    public ClienteService(ClienteRepository repository) {
+    public ClienteService(RepositoryNoReturn<Cliente> repository) {
         this.repository = repository;
     }
 
@@ -47,15 +47,15 @@ public class ClienteService {
 
     public boolean validarCliente(Cliente cliente) throws SQLException {
         try{
-            buscarClientePorCPF(cliente);
-            return false;
-        } catch(ClienteNaoEncontradoException e){
+            buscarDuplicata(cliente);
             return true;
+        } catch(ClienteInvalidoException e){
+            return false;
         }
     }
 
-    private void buscarClientePorCPF(Cliente cliente) throws SQLException, ClienteNaoEncontradoException {
-        if(repository.buscarPorCpf(cliente) == null)
-            throw new ClienteNaoEncontradoException("Cliente não encontrado");
+    private void buscarDuplicata(Cliente cliente) throws SQLException, ClienteInvalidoException {
+        if(repository.buscarPorChaveSecundaria(cliente) != null)
+            throw new ClienteInvalidoException("Cliente inválido");
     }
 }

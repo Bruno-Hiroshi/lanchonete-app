@@ -1,37 +1,37 @@
 package fatec.lanchoneteapp.application.service;
 
-import fatec.lanchoneteapp.adapters.repository.FornecedorRepository;
 import fatec.lanchoneteapp.application.exception.FornecedorInvalidoException;
 import fatec.lanchoneteapp.application.exception.FornecedorNaoEncontradoException;
+import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
 import fatec.lanchoneteapp.domain.entity.Fornecedor;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class FornecedorService {
-    private final FornecedorRepository fornecedorRepository;
+    private final RepositoryNoReturn<Fornecedor> repository;
 
-    public FornecedorService(FornecedorRepository fornecedorRepository) {
-        this.fornecedorRepository = fornecedorRepository;
+    public FornecedorService(RepositoryNoReturn<Fornecedor> repository) {
+        this.repository = repository;
     }
 
     public void criarFornecedor(Fornecedor fornecedor) throws SQLException, FornecedorInvalidoException {
         if(!validarFornecedor(fornecedor))
             throw new FornecedorInvalidoException("Fornecedor já cadastrado");
 
-        fornecedorRepository.salvar(fornecedor);
+        repository.salvar(fornecedor);
     }
 
     public void atualizarFornecedor(Fornecedor fornecedor) throws SQLException {
-        fornecedorRepository.atualizar(fornecedor);
+        repository.atualizar(fornecedor);
     }
 
     public void excluirFornecedor(Fornecedor fornecedor) throws SQLException {
-        fornecedorRepository.excluir(fornecedor);
+        repository.excluir(fornecedor);
     }
 
     public Fornecedor buscarFornecedor(int idFornecedor) throws SQLException, FornecedorNaoEncontradoException {
-        Fornecedor fornecedor = fornecedorRepository.buscarPorID(new Fornecedor(idFornecedor));
+        Fornecedor fornecedor = repository.buscarPorID(new Fornecedor(idFornecedor));
 
         if(fornecedor == null)
             throw new FornecedorNaoEncontradoException("Fornecedor não encontrado");
@@ -40,24 +40,24 @@ public class FornecedorService {
     }
 
     public void removerFornecedor(Fornecedor fornecedor) throws SQLException {
-        fornecedorRepository.excluir(fornecedor);
+        repository.excluir(fornecedor);
     }
 
     public List<Fornecedor> listarFornecedores() throws SQLException {
-        return fornecedorRepository.listar();
+        return repository.listar();
     }
 
-    private boolean validarFornecedor(Fornecedor fornecedor) throws SQLException {
+    public boolean validarFornecedor(Fornecedor fornecedor) throws SQLException {
         try {
-            buscarFornecedorPorCNPJ(fornecedor);
-            return false;
-        } catch(FornecedorNaoEncontradoException e) {
+            buscarDuplicata(fornecedor);
             return true;
+        } catch(FornecedorInvalidoException e) {
+            return false;
         }
     }
 
-    private void buscarFornecedorPorCNPJ(Fornecedor fornecedor) throws SQLException, FornecedorNaoEncontradoException {
-        if(fornecedorRepository.buscarPorCnpj(fornecedor) == null)
-            throw new FornecedorNaoEncontradoException("Fornecedor não encontrado");
+    private void buscarDuplicata(Fornecedor fornecedor) throws SQLException, FornecedorInvalidoException {
+        if(repository.buscarPorChaveSecundaria(fornecedor) != null)
+            throw new FornecedorInvalidoException("Fornecedor inválido");
     }
 }

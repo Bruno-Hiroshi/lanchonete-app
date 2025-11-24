@@ -45,10 +45,15 @@ public class CargoService {
 
     public boolean validarCargo(Cargo cargo) throws SQLException {
         try {
-            buscarCargo(cargo.getId());
-            return false;
-        } catch(CargoNaoEncontradoException e) {
+            buscarDuplicata(cargo);
             return true;
+        } catch(CargoInvalidoException e) {
+            return false;
         }
+    }
+
+    private void buscarDuplicata(Cargo cargo) throws SQLException, CargoNaoEncontradoException{
+        if(repository.buscarPorChaveSecundaria(cargo) != null)
+            throw new CargoInvalidoException("Cargo inválido");
     }
 }
