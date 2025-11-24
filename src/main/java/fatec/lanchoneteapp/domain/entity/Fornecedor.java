@@ -1,7 +1,5 @@
 package fatec.lanchoneteapp.domain.entity;
 
-import java.util.List;
-
 public class Fornecedor {
     private int id;
     private String nome;
@@ -11,7 +9,6 @@ public class Fornecedor {
     private int numero;
     private String cep;
     private String complemento;
-    private List<Produto> produtos;
 
     public Fornecedor(){}
     public Fornecedor(int id) {
@@ -26,7 +23,7 @@ public class Fornecedor {
         this.cep = cep;
         this.complemento = complemento;
     }
-    public Fornecedor(int id, String nome, String tel, String cnpj, String logradouro, int numero, String cep, String complemento, List<Produto> produtos) {
+    public Fornecedor(int id, String nome, String tel, String cnpj, String logradouro, int numero, String cep, String complemento) {
         this.id = id;
         this.nome = nome;
         this.tel = tel;
@@ -35,7 +32,6 @@ public class Fornecedor {
         this.numero = numero;
         this.cep = cep;
         this.complemento = complemento;
-        this.produtos = produtos;
     }
 
     public int getId() {
@@ -62,9 +58,6 @@ public class Fornecedor {
     public String getComplemento() {
         return complemento;
     }
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
     public void setId(int id) {
         this.id = id;
     }
@@ -88,8 +81,5 @@ public class Fornecedor {
     }
     public void setComplemento(String complemento) {
         this.complemento = complemento;
-    }
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
     }
 }

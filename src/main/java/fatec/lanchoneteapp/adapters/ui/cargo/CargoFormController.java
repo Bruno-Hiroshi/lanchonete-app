@@ -35,6 +35,9 @@ public class CargoFormController extends Controller implements IFormController<C
     @FXML
     @Override
     public void onSalvarClick() {
+        if(!validarCampos())
+            return;
+        
         if(idCargo > 0) {
             // Atualizar cargo existente
             CargoDTO cargoDTO = new CargoDTO(
@@ -75,15 +78,34 @@ public class CargoFormController extends Controller implements IFormController<C
         }
     }
 
-    public void setCadastroFacade(CadastroFacade cadastroFacade) {
-        this.cadastroFacade = cadastroFacade;
-    }
-
     @Override
     public void setCampos(CargoDTO cargo) {
         this.idCargo = cargo.id();
         tfNomeCargo.setText(cargo.nome());
         tfSalarioCargo.setText(String.valueOf(cargo.salario()));
         tfDescricaoCargo.setText(cargo.descricao());
+    }
+
+    @Override
+    public boolean validarCampos() {
+        String message = "";
+
+        if(tfDescricaoCargo.getText().isEmpty())
+            message = "O Campo 'Descrição' é obrigatório";
+        if(tfSalarioCargo.getText().isEmpty())
+            message = "O Campo 'Salário' é obrigatório";
+        if(tfNomeCargo.getText().isEmpty())
+            message = "O Campo 'Nome' é obrigatório";
+        
+        if(message.isEmpty())
+            return true;
+        else {
+            criarErrorAlert("Cadastro inválido!", message);
+            return false;
+        }
+    }
+
+    public void setCadastroFacade(CadastroFacade cadastroFacade) {
+        this.cadastroFacade = cadastroFacade;
     }
 }

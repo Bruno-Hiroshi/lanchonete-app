@@ -4,4 +4,5 @@ public interface IFormController<T> {
     public void onVoltarClick();
     public void onSalvarClick();
     public void setCampos(T t);
+    public boolean validarCampos();
 }

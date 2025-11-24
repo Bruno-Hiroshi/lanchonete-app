@@ -20,4 +20,13 @@ public abstract class Controller {
 
         alert.showAndWait();
     }
+
+    protected void criarWarningAlert(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        alert.showAndWait();
+    }
 }

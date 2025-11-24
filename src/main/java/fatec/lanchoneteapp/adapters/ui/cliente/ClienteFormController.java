@@ -1,17 +1,18 @@
 package fatec.lanchoneteapp.adapters.ui.cliente;
 
+import fatec.lanchoneteapp.adapters.ui.controller.Controller;
+import fatec.lanchoneteapp.adapters.ui.controller.IFormController;
 import fatec.lanchoneteapp.application.dto.ClienteDTO;
 import fatec.lanchoneteapp.application.exception.ClienteInvalidoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
-public class ClienteFormController {
+public class ClienteFormController extends Controller implements IFormController<ClienteDTO>{
 
     private CadastroFacade cadastroFacade;
 
@@ -27,12 +28,14 @@ public class ClienteFormController {
     @FXML private TextField tfComplementoCliente;
 
     @FXML
+    @Override
     public void onVoltarClick() {
         Stage stage = (Stage) btnVoltarCliente.getScene().getWindow();
         stage.close();
     }
 
     @FXML
+    @Override
     public void onSalvarClick() {
         if(!validarCampos())
             return;
@@ -85,24 +88,19 @@ public class ClienteFormController {
         }
     }
 
-    private void criarErrorAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
+    @Override
+    public void setCampos(ClienteDTO cliente) {
+        this.idCliente = cliente.id();
+        tfNomeCliente.setText(cliente.getNome());
+        tfTelefoneCliente.setText(cliente.getTel());
+        tfCPFCliente.setText(cliente.getCpf());
+        tfLogradouroCliente.setText(cliente.getLogradouro());
+        tfNumeroCliente.setText(String.valueOf(cliente.getNumero()));
+        tfCEPCliente.setText(cliente.getCep());
+        tfComplementoCliente.setText(cliente.getComplemento());
     }
 
-    private void criarInfoAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("INFO");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
-    }
-
+    @Override
     public boolean validarCampos() {
         String message = "";
 
@@ -125,17 +123,6 @@ public class ClienteFormController {
             criarErrorAlert("Cadastro inválido!", message);
             return false;
         }
-    }
-
-    public void setCampos(ClienteDTO cliente) {
-        this.idCliente = cliente.id();
-        tfNomeCliente.setText(cliente.getNome());
-        tfTelefoneCliente.setText(cliente.getTel());
-        tfCPFCliente.setText(cliente.getCpf());
-        tfLogradouroCliente.setText(cliente.getLogradouro());
-        tfNumeroCliente.setText(String.valueOf(cliente.getNumero()));
-        tfCEPCliente.setText(cliente.getCep());
-        tfComplementoCliente.setText(cliente.getComplemento());
     }
 
     public void setCadastroFacade(CadastroFacade cadastroFacade){

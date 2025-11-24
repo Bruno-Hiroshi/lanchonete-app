@@ -14,7 +14,8 @@ public class ProdutoMapper {
                 produto.getNome(),
                 produto.getQntdEstoq(),
                 produto.getValorUn(),
-                produto.getCategoria()
+                produto.getCategoria(),
+                produto.getFornecedor()
         );
     }
 
@@ -28,7 +29,8 @@ public class ProdutoMapper {
                 dto.nome(),
                 dto.qtdEstoque(),
                 dto.valorUn(),
-                dto.categoria()
+                dto.categoria(),
+                dto.fornecedor()
         );
     }
 }

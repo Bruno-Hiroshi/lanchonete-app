@@ -17,8 +17,7 @@ public class FornecedorMapper {
                 dto.logradouro(),
                 dto.numero(),
                 dto.cep(),
-                dto.complemento(),
-                dto.produtos()
+                dto.complemento()
         );
     }
 
@@ -35,8 +34,7 @@ public class FornecedorMapper {
                 fornecedor.getLogradouro(),
                 fornecedor.getNumero(),
                 fornecedor.getCep(),
-                fornecedor.getComplemento(),
-                fornecedor.getProdutos()
+                fornecedor.getComplemento()
         );
     }
 }

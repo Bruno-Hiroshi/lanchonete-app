@@ -54,36 +54,36 @@ public class CargoController extends Controller implements Initializable, IContr
 
     @FXML
     Callback<TableColumn<CargoDTO, Void>, TableCell<CargoDTO, Void>> fabricanteColunaAcoes =
-        ( param ) -> new TableCell<>() {
-            private Button btnApagar = new Button("Apagar");
-            private Button btnEditar = new Button("Editar");
-        
-            { 
-                btnApagar.setOnAction(click -> { 
-                        onRemoverClick(tvListaCargos.getItems().get(getIndex()));
-                    }
-                );
-
-                btnEditar.setOnAction(click -> { 
-                        try {
-                            onAtualizarClick(tvListaCargos.getItems().get(getIndex()));
-                        } catch (IOException e) {
-                            criarErrorAlert("Ocorreu um erro", e.getMessage());
-                        }
-                    }
-                );
-            }
-
-            @Override
-            public void updateItem(Void item, boolean empty) { 
-                super.updateItem(item, empty);
-                if (!empty) { 
-                    setGraphic( new HBox(btnApagar, btnEditar) );
-                } else { 
-                    setGraphic( null );
+    ( param ) -> new TableCell<>() {
+        private Button btnApagar = new Button("Apagar");
+        private Button btnEditar = new Button("Editar");
+    
+        { 
+            btnApagar.setOnAction(click -> { 
+                    onRemoverClick(tvListaCargos.getItems().get(getIndex()));
                 }
+            );
+
+            btnEditar.setOnAction(click -> { 
+                    try {
+                        onAtualizarClick(tvListaCargos.getItems().get(getIndex()));
+                    } catch (IOException e) {
+                        criarErrorAlert("Ocorreu um erro", e.getMessage());
+                    }
+                }
+            );
+        }
+
+        @Override
+        public void updateItem(Void item, boolean empty) { 
+            super.updateItem(item, empty);
+            if (!empty) { 
+                setGraphic( new HBox(btnApagar, btnEditar) );
+            } else { 
+                setGraphic( null );
             }
-        };
+        }
+    };
 
     @FXML
     @Override
@@ -118,7 +118,7 @@ public class CargoController extends Controller implements Initializable, IContr
         controller.setCampos(cargo);
 
         Stage stage = new Stage();
-        stage.setTitle("Novo Cargo");
+        stage.setTitle("Atualizar Cargo");
         stage.setScene(new Scene(form));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();

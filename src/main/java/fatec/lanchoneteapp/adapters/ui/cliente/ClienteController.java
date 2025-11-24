@@ -1,5 +1,7 @@
 package fatec.lanchoneteapp.adapters.ui.cliente;
 
+import fatec.lanchoneteapp.adapters.ui.controller.Controller;
+import fatec.lanchoneteapp.adapters.ui.controller.IController;
 import fatec.lanchoneteapp.application.dto.ClienteDTO;
 import fatec.lanchoneteapp.application.exception.ClienteNaoEncontradoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
@@ -22,7 +24,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ClienteController implements Initializable {
+public class ClienteController extends Controller implements Initializable, IController<ClienteDTO> {
 
     private final CadastroFacade cadastroFacade;
 
@@ -51,43 +53,44 @@ public class ClienteController implements Initializable {
         clientesObservableList = FXCollections.observableArrayList();
         tvListaClientes.setItems(clientesObservableList);
 
-        carregarClientes();
+        carregarTabela();
     }
 
     @FXML
     Callback<TableColumn<ClienteDTO, Void>, TableCell<ClienteDTO, Void>> fabricanteColunaAcoes =
-            ( param ) -> new TableCell<>() {
-                private Button btnApagar = new Button("Apagar");
-                private Button btnEditar = new Button("Editar");
+    ( param ) -> new TableCell<>() {
+        private Button btnApagar = new Button("Apagar");
+        private Button btnEditar = new Button("Editar");
 
-                {
-                    btnApagar.setOnAction(click -> {
-                                onRemoverClick(tvListaClientes.getItems().get(getIndex()));
-                            }
-                    );
-
-                    btnEditar.setOnAction(click -> {
-                                try {
-                                    onAtualizarClick(tvListaClientes.getItems().get(getIndex()));
-                                } catch (IOException e) {
-                                    criarErrorAlert("Ocorreu um erro", e.getMessage());
-                                }
-                            }
-                    );
+        {
+            btnApagar.setOnAction(click -> {
+                    onRemoverClick(tvListaClientes.getItems().get(getIndex()));
                 }
+            );
 
-                @Override
-                public void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (!empty) {
-                        setGraphic( new HBox(btnEditar, btnApagar) );
-                    } else {
-                        setGraphic( null );
+            btnEditar.setOnAction(click -> {
+                    try {
+                        onAtualizarClick(tvListaClientes.getItems().get(getIndex()));
+                    } catch (IOException e) {
+                        criarErrorAlert("Ocorreu um erro", e.getMessage());
                     }
                 }
-            };
+            );
+        }
+
+        @Override
+        public void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            if (!empty) {
+                setGraphic( new HBox(btnEditar, btnApagar) );
+            } else {
+                setGraphic( null );
+            }
+        }
+    };
 
     @FXML
+    @Override
     public void onInserirClick() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fatec/lanchoneteapp/run/cliente/CadastroCliente.fxml"
@@ -103,29 +106,11 @@ public class ClienteController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
-        carregarClientes();
+        carregarTabela();
     }
 
     @FXML
-    public void onBuscarClick() {
-        if(tfBuscarCliente.getText().isEmpty()) {
-            carregarClientes();
-            return;
-        }
-
-        try{
-            clientesObservableList.clear();
-            clientesObservableList.addAll(
-                    cadastroFacade.buscarCliente(Integer.parseInt(tfBuscarCliente.getText()))
-            );
-        } catch (ClienteNaoEncontradoException e) {
-            criarErrorAlert("Cliente não encontrado", e.getMessage());
-        } catch (SQLException e) {
-            criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
-        }
-    }
-
-    @FXML
+    @Override
     public void onAtualizarClick(ClienteDTO cliente) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fatec/lanchoneteapp/run/cliente/CadastroCliente.fxml"
@@ -142,20 +127,43 @@ public class ClienteController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
-        carregarClientes();
+        carregarTabela();
     }
 
     @FXML
+    @Override
     public void onRemoverClick(ClienteDTO cliente) {
         try {
             cadastroFacade.removerCliente(cliente.id());
-            carregarClientes();
+            carregarTabela();
         } catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }
     }
 
-    private void carregarClientes() {
+    @FXML
+    @Override
+    public void onBuscarClick() {
+        if(tfBuscarCliente.getText().isEmpty()) {
+            carregarTabela();
+            return;
+        }
+
+        try{
+            clientesObservableList.clear();
+            clientesObservableList.addAll(
+                    cadastroFacade.buscarCliente(Integer.parseInt(tfBuscarCliente.getText()))
+            );
+        } catch (ClienteNaoEncontradoException e) {
+            criarWarningAlert("Cliente não encontrado", e.getMessage());
+        } catch (SQLException e) {
+            criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
+        }
+    }
+
+    @FXML
+    @Override
+    public void carregarTabela() {
         tcIDCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcTelefoneCliente.setCellValueFactory(new PropertyValueFactory<>("tel"));
@@ -172,23 +180,5 @@ public class ClienteController implements Initializable {
         } catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }
-    }
-
-    private void criarErrorAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
-    }
-
-    private void criarWarningAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Aviso");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
     }
 }

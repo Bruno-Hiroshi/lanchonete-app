@@ -1,9 +1,5 @@
 package fatec.lanchoneteapp.application.dto;
 
-import fatec.lanchoneteapp.domain.entity.Produto;
-
-import java.util.List;
-
 public record FornecedorDTO(
         int id,
         String nome,
@@ -12,6 +8,37 @@ public record FornecedorDTO(
         String logradouro,
         int numero,
         String cep,
-        String complemento,
-        List<Produto> produtos
-) { }
+        String complemento
+) { 
+    public int getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+}

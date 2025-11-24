@@ -71,10 +71,10 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public PedidoDTO adicionarProduto(int nPedido, int idProduto, int qtd) throws SQLException, IllegalArgumentException {
+    public PedidoDTO adicionarProduto(int nPedido, Produto produto, int qtd) throws SQLException, IllegalArgumentException {
         Pedido pedido = pedidoService.buscarPedido(nPedido);
-        Produto produto = produtoService.buscarProduto(idProduto);
-        ItemPedido item = new ItemPedido(nPedido, idProduto, qtd);
+        produto = produtoService.buscarProduto(produto.getId());
+        ItemPedido item = new ItemPedido(nPedido, produto, qtd);
 
         manterPedidoUC.adicionarItem(pedido, produto, item);
 
@@ -85,9 +85,9 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public PedidoDTO removerProduto(int nPedido, int idProduto) throws SQLException {
+    public PedidoDTO removerProduto(int nPedido, Produto produto) throws SQLException {
         Pedido pedido = pedidoService.buscarPedido(nPedido);
-        ItemPedido item = itemPedidoService.buscarItem(nPedido, idProduto);
+        ItemPedido item = itemPedidoService.buscarItem(nPedido, produto);
 
         manterPedidoUC.removerItem(pedido, item);
 
@@ -97,8 +97,8 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public PedidoDTO atualizarQuantidadeProduto(int nPedido, int idProduto, int novaQtd) throws SQLException {
-        ItemPedido item = itemPedidoService.buscarItem(nPedido, idProduto);
+    public PedidoDTO atualizarQuantidadeProduto(int nPedido, Produto produto, int novaQtd) throws SQLException {
+        ItemPedido item = itemPedidoService.buscarItem(nPedido, produto);
         Pedido pedido = pedidoService.buscarPedido(nPedido);
 
         manterPedidoUC.atualizarQuantidadeItem(pedido, item, novaQtd);

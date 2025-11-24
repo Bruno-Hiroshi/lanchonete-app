@@ -2,6 +2,7 @@ package fatec.lanchoneteapp.application.service;
 
 import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
+import fatec.lanchoneteapp.domain.entity.Produto;
 
 import java.sql.SQLException;
 
@@ -50,11 +51,11 @@ public class ItemPedidoService {
      * Se o item não for encontrado, retorna um ItemPedido vazio.
      *
      * @param nPedido   o número do pedido a ser consultado
-     * @param idProduto o ID do produto a ser buscado no pedido
+     * @param produto o produto a ser buscado no pedido
      * @return o objeto ItemPedido encontrado ou um novo ItemPedido se não encontrado
      * @throws SQLException caso ocorra erro ao consultar o banco de dados
      */
-    public ItemPedido buscarItem(int nPedido, int idProduto) throws SQLException {
-        return repository.buscarPorID(new ItemPedido(nPedido, idProduto));
+    public ItemPedido buscarItem(int nPedido, Produto produto) throws SQLException {
+        return repository.buscarPorID(new ItemPedido(nPedido, produto));
     }
 }

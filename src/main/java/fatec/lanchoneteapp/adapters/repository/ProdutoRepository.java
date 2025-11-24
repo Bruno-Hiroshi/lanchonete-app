@@ -1,6 +1,6 @@
 package fatec.lanchoneteapp.adapters.repository;
 
-import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
+import fatec.lanchoneteapp.application.repository.RepositoryReturn;
 import fatec.lanchoneteapp.domain.entity.Categoria;
 import fatec.lanchoneteapp.domain.entity.Produto;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdutoRepository implements RepositoryNoReturn<Produto> {
+public class ProdutoRepository implements RepositoryReturn<Produto> {
     private Connection connection;
 
     public ProdutoRepository(Connection connection){
@@ -19,15 +19,24 @@ public class ProdutoRepository implements RepositoryNoReturn<Produto> {
     }
 
     @Override
-    public void salvar(Produto entidade) throws SQLException {
+    public int salvar(Produto entidade) throws SQLException {
         String sql = "INSERT INTO Produto(Nome, QtdEstoque, ValorUnit, ID_Categoria) VALUES (?, ?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setString(1, entidade.getNome());
         ps.setInt(2, entidade.getQntdEstoq());
         ps.setDouble(3, entidade.getValorUn());
         ps.setInt(4, entidade.getCategoria().getId());
         ps.execute();
+
+        int numPedido = 0;
+        ResultSet rs = ps.getGeneratedKeys();
+        
+        if(rs.next()){
+            numPedido = rs.getInt(1);
+        }
+        
         ps.close();
+        return numPedido;
     }
 
     @Override

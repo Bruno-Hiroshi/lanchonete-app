@@ -3,6 +3,7 @@ package fatec.lanchoneteapp.run;
 import fatec.lanchoneteapp.adapters.ui.cargo.CargoController;
 import fatec.lanchoneteapp.adapters.ui.categoria.CategoriaController;
 import fatec.lanchoneteapp.adapters.ui.cliente.ClienteController;
+import fatec.lanchoneteapp.adapters.ui.fornecedor.FornecedorController;
 import fatec.lanchoneteapp.config.AppBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,9 @@ public class Main extends Application {
             }
             if (type == CargoController.class) {
                 return new CargoController(builder.getCadastroFacade());
+            }
+            if (type == FornecedorController.class) {
+                return new FornecedorController(builder.getCadastroFacade());
             }
 
             // fallback padrão

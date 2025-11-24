@@ -1,6 +1,5 @@
 package fatec.lanchoneteapp.application.dto;
 
-import fatec.lanchoneteapp.domain.entity.Cliente;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
 
 import java.time.LocalDate;

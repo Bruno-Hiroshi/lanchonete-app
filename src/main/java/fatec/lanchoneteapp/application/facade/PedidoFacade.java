@@ -3,6 +3,7 @@ package fatec.lanchoneteapp.application.facade;
 import fatec.lanchoneteapp.application.dto.HistoricoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
+import fatec.lanchoneteapp.domain.entity.Produto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -57,7 +58,7 @@ public interface PedidoFacade {
      * @param qtdEstoque a quantidade do produto a ser adicionada ao pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO adicionarProduto(int nPedido, int produtoId, int qtdEstoque) throws SQLException, IllegalArgumentException;
+    PedidoDTO adicionarProduto(int nPedido, Produto produto, int qtdEstoque) throws SQLException, IllegalArgumentException;
 
     /**
      * Remove um produto de um pedido existente com base no ID do pedido e no ID do produto.
@@ -66,7 +67,7 @@ public interface PedidoFacade {
      * @param produtoId o ID do produto a ser removido do pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO removerProduto(int nPedido, int produtoId) throws SQLException;
+    PedidoDTO removerProduto(int nPedido, Produto produto) throws SQLException;
 
     /**
      * Atualiza a quantidade de um produto específico em um pedido existente.
@@ -76,7 +77,7 @@ public interface PedidoFacade {
      * @param novaQuantidade a nova quantidade a ser definida para o produto no pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO atualizarQuantidadeProduto(int nPedido, int produtoId, int novaQuantidade) throws SQLException;
+    PedidoDTO atualizarQuantidadeProduto(int nPedido, Produto produto, int novaQuantidade) throws SQLException;
 
     // --- STATUS ---
 

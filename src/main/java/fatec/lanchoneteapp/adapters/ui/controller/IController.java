@@ -1,9 +1,11 @@
 package fatec.lanchoneteapp.adapters.ui.controller;
 
+import java.io.IOException;
+
 public interface IController<T> {
-    public void onInserirClick() throws Exception;
-    public void onAtualizarClick(T t) throws Exception;
-    public void onRemoverClick(T t) throws Exception;
-    public void onBuscarClick() throws Exception;
-    public void carregarTabela() throws Exception;
+    public void onInserirClick() throws IOException;
+    public void onAtualizarClick(T t) throws IOException;
+    public void onRemoverClick(T t) ;
+    public void onBuscarClick();
+    public void carregarTabela();
 }

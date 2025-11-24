@@ -6,6 +6,7 @@ public class Produto {
     private int qntdEstoq;
     private double valorUn;
     private Categoria categoria;
+    private Fornecedor fornecedor;
 
     public Produto() {
         super();
@@ -14,12 +15,13 @@ public class Produto {
         super();
         this.id = id;
     }
-    public Produto(int id, String nome, int qntdEstoq, double valorUn, Categoria categoria) {
+    public Produto(int id, String nome, int qntdEstoq, double valorUn, Categoria categoria, Fornecedor fornecedor) {
         this.id = id;
         this.nome = nome;
         this.qntdEstoq = qntdEstoq;
         this.valorUn = valorUn;
         this.categoria = categoria;
+        this.fornecedor = fornecedor;
     }
 
     public int getId() {
@@ -37,6 +39,9 @@ public class Produto {
     public Categoria getCategoria() {
         return categoria;
     }
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -51,6 +56,9 @@ public class Produto {
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public void atualizarQtdEstoque(int qtdCompra) {
