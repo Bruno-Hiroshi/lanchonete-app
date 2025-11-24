@@ -58,7 +58,7 @@ public class CargoFormController extends Controller implements IFormController<C
             }
         }
         else {
-            // Criar novo cargo
+            // Criar cargo
             CargoDTO cargoDTO = new CargoDTO(
                 0,
                 tfNomeCargo.getText(),

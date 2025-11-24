@@ -101,7 +101,7 @@ public class CargoRepository implements RepositoryNoReturn<Cargo> {
 
     @Override
     public Cargo buscarPorChaveSecundaria(Cargo entidade) throws SQLException {
-        String sql = "SELECT ID, Nome, Salario, Descricao FROM Cargo WHERE Nome LIKE ?%";
+        String sql = "SELECT ID, Nome, Salario, Descricao FROM Cargo WHERE Nome LIKE ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getNome());
 

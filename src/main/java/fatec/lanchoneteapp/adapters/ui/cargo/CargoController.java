@@ -63,6 +63,7 @@ public class CargoController extends Controller implements Initializable, IContr
                     onRemoverClick(tvListaCargos.getItems().get(getIndex()));
                 }
             );
+            btnApagar.setPrefWidth(100);
 
             btnEditar.setOnAction(click -> { 
                     try {
@@ -72,13 +73,19 @@ public class CargoController extends Controller implements Initializable, IContr
                     }
                 }
             );
+            btnEditar.setPrefWidth(100);
+        }
+
+        private final HBox hbox = new HBox(5, btnEditar, btnApagar);
+        {
+            hbox.setStyle("-fx-alignment: CENTER;");
         }
 
         @Override
         public void updateItem(Void item, boolean empty) { 
             super.updateItem(item, empty);
             if (!empty) { 
-                setGraphic( new HBox(btnApagar, btnEditar) );
+                setGraphic( hbox );
             } else { 
                 setGraphic( null );
             }
