@@ -13,12 +13,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.controller.ProdutoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.FuncionarioController">
     <bottom>
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnInserirProduto" mnemonicParsing="false" text="Inserir" />
-                <Button fx:id="btnBuscarProduto" mnemonicParsing="false" text="Buscar" />
+                <Button fx:id="btnInserirFuncionario" mnemonicParsing="false" text="Inserir" />
+                <Button fx:id="btnBuscarFuncionario" mnemonicParsing="false" text="Buscar" />
             </children>
         </HBox>
     </bottom>
@@ -32,8 +32,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label alignment="CENTER" text="Lista de Produtos" />
-                <TextField fx:id="tfBuscarProduto" promptText="Buscar por ID" GridPane.rowIndex="1" />
+                <Label alignment="CENTER" text="Lista de Funcionários" />
+                <TextField fx:id="tfBuscarFuncionario" promptText="Buscar por ID" GridPane.rowIndex="1" />
             </children>
         </GridPane>
     </top>
@@ -42,15 +42,16 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <TableView fx:id="tvListaProdutos" prefHeight="400.0" prefWidth="659.0">
+                  <TableView fx:id="tvListaFuncionarios" AnchorPane.rightAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="tcIDProduto" prefWidth="75.0" text="ID" />
-                        <TableColumn fx:id="tcNomeProduto" prefWidth="93.0" text="Nome" />
-                        <TableColumn fx:id="tcQtdEstoqueProduto" prefWidth="112.0" text="Qtd Em Estoque" />
-                        <TableColumn fx:id="tcDataContratoProduto" prefWidth="100.0" text="Data Contrato" />
-                        <TableColumn fx:id="tcValorUnitProduto" prefWidth="108.0" text="Valor Unitário" />
-                        <TableColumn fx:id="tCategoriaProduto" prefWidth="87.0" text="Categoria" />
-                        <TableColumn fx:id="tcAcoesProduto" prefWidth="83.0" text="Ações" />
+                        <TableColumn fx:id="tcIDFuncionario" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="tcNomeFuncionario" prefWidth="75.0" text="Nome" />
+                        <TableColumn fx:id="tcTelefoneFuncionario" prefWidth="75.0" text="Telefone" />
+                        <TableColumn fx:id="tcEmailFuncionario" prefWidth="75.0" text="Email" />
+                        <TableColumn fx:id="tcDataContratoFuncionario" prefWidth="75.0" text="Data Contrato" />
+                        <TableColumn fx:id="tcCargoFuncionario" prefWidth="75.0" text="Cargo" />
+                        <TableColumn fx:id="tcSalarioFuncionario" prefWidth="75.0" text="Salário" />
+                        <TableColumn fx:id="tcAcoesFuncionario" prefWidth="75.0" text="Ações" />
                      </columns>
                   </TableView>
                </children>
