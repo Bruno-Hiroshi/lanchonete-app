@@ -1,5 +1,7 @@
 package fatec.lanchoneteapp.adapters.ui.cargo;
 
+import fatec.lanchoneteapp.adapters.ui.controller.Controller;
+import fatec.lanchoneteapp.adapters.ui.controller.IController;
 import fatec.lanchoneteapp.application.dto.CargoDTO;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import javafx.collections.FXCollections;
@@ -10,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,7 +23,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CargoController implements Initializable {
+public class CargoController extends Controller implements Initializable, IController<CargoDTO> {
     
     private final CadastroFacade cadastroFacade;
 
@@ -46,7 +49,7 @@ public class CargoController implements Initializable {
         cargosObservableList = FXCollections.observableArrayList();
         tvListaCargos.setItems(cargosObservableList);
 
-        carregarCargos();
+        carregarTabela();
     }
 
     @FXML
@@ -83,6 +86,7 @@ public class CargoController implements Initializable {
         };
 
     @FXML
+    @Override
     public void onInserirClick() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fatec/lanchoneteapp/run/cargo/CadastroCargo.fxml"
@@ -98,10 +102,11 @@ public class CargoController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
-        carregarCargos();
+        carregarTabela();
     }
 
     @FXML
+    @Override
     public void onAtualizarClick(CargoDTO cargo) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fatec/lanchoneteapp/run/cargo/CadastroCargo.fxml"
@@ -118,23 +123,25 @@ public class CargoController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
-        carregarCargos();
+        carregarTabela();
     }
 
     @FXML
+    @Override
     public void onRemoverClick(CargoDTO cargo) {
         try {
             cadastroFacade.removerCargo(cargo.id());
-            carregarCargos();
+            carregarTabela();
         } catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }
     }
 
     @FXML
+    @Override
     public void onBuscarClick() {
         if(tfBuscarCargo.getText().isEmpty()) {
-            carregarCargos();
+            carregarTabela();
             return;
         }
 
@@ -148,21 +155,20 @@ public class CargoController implements Initializable {
         }
     }
 
-    private void carregarCargos() {
+    @FXML
+    @Override
+    public void carregarTabela() {
+        tcIDCargo.setCellValueFactory(new PropertyValueFactory<CargoDTO, Integer>("id"));
+        tcNomeCargo.setCellValueFactory(new PropertyValueFactory<CargoDTO, String>("nome"));
+        tcSalarioCargo.setCellValueFactory(new PropertyValueFactory<CargoDTO, Double>("salario"));
+        tcDescricaoCargo.setCellValueFactory(new PropertyValueFactory<CargoDTO, String>("descricao"));
+        tcAcoesCargo.setCellFactory(fabricanteColunaAcoes);
+
         try {
             cargosObservableList.clear();
             cargosObservableList.addAll(cadastroFacade.listarCargos());
         } catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }
-    }
-
-    private void criarErrorAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
     }
 }

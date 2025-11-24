@@ -19,7 +19,7 @@ public class FornecedorRepository implements RepositoryNoReturn<Fornecedor>{
 
     @Override
     public void salvar(Fornecedor entidade) throws SQLException {
-        String sql = "INSERT INTO Fornecedor(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Fornecedor(Nome, Telefone, CNPJ, Logradouro, Numero, CEP, Complemento) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getNome());
         ps.setString(2, entidade.getTel());
@@ -81,7 +81,7 @@ public class FornecedorRepository implements RepositoryNoReturn<Fornecedor>{
         }
 
         if(cont == 0){
-            entidade = new Fornecedor();
+            entidade = null;
         }
 
         rs.close();
@@ -139,7 +139,7 @@ public class FornecedorRepository implements RepositoryNoReturn<Fornecedor>{
         }
 
         if(cont == 0){
-            entidade = new Fornecedor();
+            entidade = null;
         }
 
         rs.close();

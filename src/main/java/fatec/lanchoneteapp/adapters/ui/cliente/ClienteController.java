@@ -1,11 +1,8 @@
 package fatec.lanchoneteapp.adapters.ui.cliente;
 
-import fatec.lanchoneteapp.adapters.ui.cargo.CargoFormController;
-import fatec.lanchoneteapp.application.dto.CargoDTO;
 import fatec.lanchoneteapp.application.dto.ClienteDTO;
 import fatec.lanchoneteapp.application.exception.ClienteNaoEncontradoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
-import fatec.lanchoneteapp.domain.entity.Cliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

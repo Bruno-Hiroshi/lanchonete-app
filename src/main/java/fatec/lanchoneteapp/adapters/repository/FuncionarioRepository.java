@@ -21,7 +21,7 @@ public class FuncionarioRepository implements RepositoryNoReturn<Funcionario> {
 
     @Override
     public void salvar(Funcionario entidade) throws SQLException {
-        String sql = "INSERT INTO Funcionario(?,?,?,?,?)";
+        String sql = "INSERT INTO Funcionario(Nome, Telefone, Email , DataContrato, ID_Cargo) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getNome());
         ps.setString(2, entidade.getTel());
@@ -87,9 +87,7 @@ public class FuncionarioRepository implements RepositoryNoReturn<Funcionario> {
         }
 
         if(cont == 0){
-            entidade = new Funcionario();
-            Cargo cargo = new Cargo();
-            entidade.setCargo(cargo);
+            entidade = null;
         }
 
         rs.close();
@@ -164,9 +162,7 @@ public class FuncionarioRepository implements RepositoryNoReturn<Funcionario> {
         }
 
         if(cont == 0){
-            entidade = new Funcionario();
-            Cargo cargo = new Cargo();
-            entidade.setCargo(cargo);
+            entidade = null;
         }
 
         rs.close();

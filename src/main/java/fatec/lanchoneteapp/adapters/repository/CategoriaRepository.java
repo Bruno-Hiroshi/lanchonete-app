@@ -19,7 +19,7 @@ public class CategoriaRepository implements RepositoryNoReturn<Categoria> {
 
     @Override
     public void salvar(Categoria entidade) throws SQLException {
-        String sql = "INSERT INTO Categoria(?, ?)";
+        String sql = "INSERT INTO Categoria(Nome, Descricao) VALUES(?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getNome());
         ps.setString(2, entidade.getDescricao());
@@ -65,7 +65,7 @@ public class CategoriaRepository implements RepositoryNoReturn<Categoria> {
         }
 
         if(cont == 0){
-            entidade = new Categoria();
+            entidade = null;
         }
 
         rs.close();
@@ -113,7 +113,7 @@ public class CategoriaRepository implements RepositoryNoReturn<Categoria> {
         }
 
         if(cont == 0){
-            entidade = new Categoria();
+            entidade = null;
         }
 
         rs.close();

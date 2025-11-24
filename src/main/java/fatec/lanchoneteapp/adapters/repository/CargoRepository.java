@@ -19,7 +19,7 @@ public class CargoRepository implements RepositoryNoReturn<Cargo> {
 
     @Override
     public void salvar(Cargo entidade) throws SQLException{
-        String sql = "INSERT INTO Cargo(?, ?, ?)";
+        String sql = "INSERT INTO Cargo(Nome, Salario, Descricao) VALUES(?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, entidade.getNome());
         ps.setDouble(2, entidade.getSalario());
@@ -68,7 +68,7 @@ public class CargoRepository implements RepositoryNoReturn<Cargo> {
         }
 
         if(cont == 0){
-            entidade = new Cargo();
+            entidade = null;
         }
 
         rs.close();
@@ -118,7 +118,7 @@ public class CargoRepository implements RepositoryNoReturn<Cargo> {
         }
 
         if(cont == 0){
-            entidade = new Cargo();
+            entidade = null;
         }
 
         rs.close();

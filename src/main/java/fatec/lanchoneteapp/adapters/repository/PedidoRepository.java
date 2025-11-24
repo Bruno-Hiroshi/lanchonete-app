@@ -22,7 +22,7 @@ public class PedidoRepository implements RepositoryReturn<Pedido> {
 
     @Override
     public int salvar(Pedido entidade) throws SQLException{
-        String sql = "INSERT INTO Pedido(?, ?, ?, ?)";
+        String sql = "INSERT INTO Pedido(ValorTotal, DataPedido, StatusPedido, ID_Cliente) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setDouble(1, entidade.getValorTotal());
         ps.setDate(2, Date.valueOf(entidade.getData()));
@@ -97,9 +97,7 @@ public class PedidoRepository implements RepositoryReturn<Pedido> {
         }
 
         if(cont == 0){
-            entidade = new Pedido();
-            Cliente cliente = new Cliente();
-            entidade.setCliente(cliente);
+            entidade = null;
         }
 
         rs.close();
@@ -215,9 +213,7 @@ public class PedidoRepository implements RepositoryReturn<Pedido> {
         }
 
         if(cont == 0){
-            entidade = new Pedido();
-            Cliente cliente = new Cliente();
-            entidade.setCliente(cliente);
+            entidade = null;
         }
 
         rs.close();

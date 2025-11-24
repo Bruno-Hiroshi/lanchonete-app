@@ -1,7 +1,6 @@
 package fatec.lanchoneteapp.config;
 
 import fatec.lanchoneteapp.adapters.repository.*;
-import fatec.lanchoneteapp.adapters.repository.db.H2Connection;
 import fatec.lanchoneteapp.adapters.repository.db.IDBConnection;
 import fatec.lanchoneteapp.adapters.repository.db.SQLServerConnection;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;

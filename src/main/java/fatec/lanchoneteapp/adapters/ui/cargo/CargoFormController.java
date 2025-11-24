@@ -2,16 +2,17 @@ package fatec.lanchoneteapp.adapters.ui.cargo;
 
 import java.sql.SQLException;
 
+import fatec.lanchoneteapp.adapters.ui.controller.Controller;
+import fatec.lanchoneteapp.adapters.ui.controller.IFormController;
 import fatec.lanchoneteapp.application.dto.CargoDTO;
 import fatec.lanchoneteapp.application.exception.CargoInvalidoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class CargoFormController {
+public class CargoFormController extends Controller implements IFormController<CargoDTO>  {
     
     private CadastroFacade cadastroFacade;
 
@@ -25,12 +26,14 @@ public class CargoFormController {
     @FXML private TextField tfDescricaoCargo;
 
     @FXML
+    @Override
     public void onVoltarClick() {
         Stage stage = (Stage) btnVoltarCargo.getScene().getWindow();
         stage.close();
     }
 
     @FXML
+    @Override
     public void onSalvarClick() {
         if(idCargo > 0) {
             // Atualizar cargo existente
@@ -43,6 +46,8 @@ public class CargoFormController {
 
             try {
                 cadastroFacade.atualizarCargo(cargoDTO);
+                criarInfoAlert("Sucesso!", "Cargo atualizado com sucesso");
+                onVoltarClick();
             } catch (CargoInvalidoException e) {
                 criarErrorAlert("Cargo inválido!", e.getMessage());
             } catch (SQLException sql) {
@@ -60,6 +65,8 @@ public class CargoFormController {
 
             try {
                 cadastroFacade.novoCargo(cargoDTO);
+                criarInfoAlert("Sucesso!", "Cargo inserido com sucesso");
+                onVoltarClick();
             } catch (CargoInvalidoException e) {
                 criarErrorAlert("Cargo inválido!", e.getMessage());
             } catch (SQLException sql) {
@@ -68,19 +75,11 @@ public class CargoFormController {
         }
     }
 
-    private void criarErrorAlert(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.showAndWait();
-    }
-
     public void setCadastroFacade(CadastroFacade cadastroFacade) {
         this.cadastroFacade = cadastroFacade;
     }
 
+    @Override
     public void setCampos(CargoDTO cargo) {
         this.idCargo = cargo.id();
         tfNomeCargo.setText(cargo.nome());

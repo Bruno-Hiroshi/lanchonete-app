@@ -28,7 +28,7 @@ CREATE TABLE Cliente(
 	Logradouro VARCHAR(200) NOT NULL,
 	Numero INT NOT NULL CHECK(Numero >= 0),
 	CEP CHAR(8) NOT NULL CHECK(LEN(CEP) = 8),
-	Complemento VARCHAR(255) NOT NULL,
+	Complemento VARCHAR(255),
 	PRIMARY KEY(ID)
 )
 
@@ -67,7 +67,7 @@ CREATE TABLE Fornecedor(
 	Logradouro VARCHAR(200) NOT NULL,
 	Numero INT NOT NULL CHECK(Numero >= 0),
 	CEP CHAR(8) NOT NULL CHECK(LEN(CEP) = 8),
-	Complemento VARCHAR(255) NOT NULL,
+	Complemento VARCHAR(255),
 	PRIMARY KEY(ID)
 )
 

@@ -19,7 +19,7 @@ public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
 
     @Override
     public void salvar(ItemPedido entidade) throws SQLException {
-        String sql = "INSERT INTO Item_Pedido(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Item_Pedido(Num_Pedido, ID_Produto, Qtd, ValorUnit, ValorTotalItem) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, entidade.getNumPedido());
         ps.setInt(2, entidade.getIdProduto());
@@ -78,7 +78,7 @@ public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
         }
 
         if(cont == 0){
-            entidade = new ItemPedido();
+            entidade = null;
         }
 
         rs.close();
@@ -135,7 +135,7 @@ public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
         }
 
         if(cont == 0){
-            entidade = new ItemPedido();
+            entidade = null;
         }
 
         rs.close();
