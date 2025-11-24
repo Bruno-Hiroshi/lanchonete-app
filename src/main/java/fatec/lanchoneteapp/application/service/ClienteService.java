@@ -1,6 +1,5 @@
 package fatec.lanchoneteapp.application.service;
 
-import fatec.lanchoneteapp.adapters.repository.ClienteRepository;
 import fatec.lanchoneteapp.application.exception.ClienteInvalidoException;
 import fatec.lanchoneteapp.application.exception.ClienteNaoEncontradoException;
 import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;

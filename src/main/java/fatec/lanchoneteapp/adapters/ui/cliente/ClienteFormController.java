@@ -34,14 +34,14 @@ public class ClienteFormController {
     @FXML
     public void onSalvarClick() {
         ClienteDTO clienteDTO = new ClienteDTO(
-                0,
-                tfNomeCliente.getText(),
-                tfTelefoneCliente.getText(),
-                tfCPFCliente.getText(),
-                tfLogradouroCliente.getText(),
-                Integer.parseInt(tfNumeroCliente.getText()),
-                tfCEPCliente.getText(),
-                tfComplementoCliente.getText()
+            0,
+            tfNomeCliente.getText(),
+            tfTelefoneCliente.getText(),
+            tfCPFCliente.getText(),
+            tfLogradouroCliente.getText(),
+            Integer.parseInt(tfNumeroCliente.getText()),
+            tfCEPCliente.getText(),
+            tfComplementoCliente.getText()
         );
 
         try {
