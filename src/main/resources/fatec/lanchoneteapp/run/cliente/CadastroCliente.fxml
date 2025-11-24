@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.cliente.ClienteFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.cliente.ClienteFormController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -40,7 +40,7 @@
       </GridPane>
    </center>
    <bottom>
-      <HBox prefHeight="30.0" prefWidth="595.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="595.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnSalvarCliente" mnemonicParsing="false" onAction="#onSalvarClick" text="Salvar" />
             <Button fx:id="btnVoltarCliente" mnemonicParsing="false" onAction="#onVoltarClick" text="Voltar" />

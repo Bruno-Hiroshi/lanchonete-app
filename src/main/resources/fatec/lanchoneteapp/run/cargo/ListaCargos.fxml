@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.cargo.CargoController" >
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.cargo.CargoController">
     <bottom>
         <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
@@ -38,11 +38,11 @@
                <children>
                   <TableView fx:id="tvListaCargos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="585.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="tcIDCargo" prefWidth="75.0" text="ID" />
-                        <TableColumn fx:id="tcNomeCargo" prefWidth="152.0" text="Nome" />
-                        <TableColumn fx:id="tcSalarioCargo" prefWidth="93.0" text="Salário" />
-                        <TableColumn fx:id="tcDescricaoCargo" prefWidth="160.0" text="Descricão" />
-                        <TableColumn fx:id="tcAcoesCargo" prefWidth="104.0" text="Ações" />
+                        <TableColumn fx:id="tcIDCargo" maxWidth="50.0" minWidth="50.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="ID" />
+                        <TableColumn fx:id="tcNomeCargo" prefWidth="152.0" style="-fx-alignment: CENTER;" text="Nome" />
+                        <TableColumn fx:id="tcSalarioCargo" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Salário" />
+                        <TableColumn fx:id="tcDescricaoCargo" prefWidth="160.0" style="-fx-alignment: CENTER;" text="Descricão" />
+                        <TableColumn fx:id="tcAcoesCargo" minWidth="100.0" prefWidth="104.0" sortable="false" style="-fx-alignment: CENTER;" text="Ações" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

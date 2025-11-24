@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.PedidoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.PedidoController">
 
     <bottom>
-        <HBox prefHeight="30.0" prefWidth="595.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="595.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="btnSalvarPedido" mnemonicParsing="false" text="Salvar" />
                 <Button fx:id="btnVoltarPedido" mnemonicParsing="false" text="Voltar" />
             </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" right="10.0" />
+         </BorderPane.margin>
         </HBox>
     </bottom>
 
@@ -65,7 +54,7 @@
                               <TextField fx:id="tfValorTotal" prefHeight="25.0" prefWidth="366.0" promptText="Valor Total" GridPane.columnIndex="1" />
                               <DatePicker fx:id="dpDataPedido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="tfStatusPedido" prefHeight="25.0" prefWidth="384.0" promptText="Status" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="cbCliente" promptText="Selecione um Cliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfNomeCliente" promptText="Nome do Cliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -95,13 +84,13 @@
                                 <content>
                                   <AnchorPane>
                                        <children>
-                                          <TableView fx:id="tvListaItensPedido" prefHeight="36.0" prefWidth="459.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tvListaItensPedido" prefHeight="90.0" prefWidth="459.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columns>
-                                                <TableColumn fx:id="tcIDProduto" prefWidth="95.0" text="ID Produto" />
-                                                <TableColumn fx:id="tcNomeProduto" prefWidth="100.0" text="Quantidade" />
-                                                <TableColumn fx:id="tcQtdEstoqueProduto" prefWidth="100.0" text="Valor Unitário" />
-                                                <TableColumn fx:id="tcDataContratoProduto" prefWidth="100.0" text="Valor Total" />
-                                                <TableColumn minWidth="0.0" prefWidth="65.0" text="Ações" />
+                                                <TableColumn fx:id="tcIDProduto" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="ID Produto" />
+                                                <TableColumn fx:id="tcNomeProduto" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Quantidade" />
+                                                <TableColumn fx:id="tcQtdEstoqueProduto" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Valor Unitário" />
+                                                <TableColumn fx:id="tcDataContratoProduto" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Valor Total" />
+                                                <TableColumn minWidth="100.0" prefWidth="100.0" sortable="false" style="-fx-alignment: CENTER;" text="Ações" />
                                              </columns>
                                           </TableView>
                                        </children>
