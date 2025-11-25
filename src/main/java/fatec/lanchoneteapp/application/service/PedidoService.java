@@ -59,16 +59,4 @@ public class PedidoService {
     public List<Pedido> listarPedidos() throws SQLException {
         return repository.listar();
     }
-
-    /**
-     * Recupera o histórico de pedidos de um cliente específico.
-     *
-     * @param cliente O cliente cujo histórico de pedidos será recuperado.
-     * @return Uma lista de objetos Pedido representando o histórico de pedidos do cliente.
-     * @throws SQLException Se ocorrer um erro de acesso ao banco de dados.
-     */
-    //TODO: CORRIGIR IMPLEMENTAÇÃO
-    public List<Pedido> listarHistorico(Cliente cliente) throws SQLException {
-        return List.of();
-    }
 }
