@@ -55,6 +55,7 @@ CREATE TABLE Produto(
 	QtdEstoque INT NOT NULL CHECK(QtdEstoque >= 0),
 	ValorUnit DECIMAL(7,2) NOT NULL CHECK(ValorUnit > 0),
 	ID_Categoria INT NOT NULL,
+	ID_Fornecedor INT NOT NULL,
 	PRIMARY KEY(ID),
 	FOREIGN KEY(ID_Categoria) REFERENCES Categoria(ID)
 )
@@ -80,12 +81,4 @@ CREATE TABLE Item_Pedido(
 	PRIMARY KEY(Num_Pedido, ID_Produto),
 	FOREIGN KEY(Num_Pedido) REFERENCES Pedido(Num_Pedido),
 	FOREIGN KEY(ID_Produto) REFERENCES Produto(ID)
-)
-
-CREATE TABLE Produto_Fornecedor(
-	ID_Produto INT NOT NULL,
-	ID_Fornecedor INT NOT NULL,
-	PRIMARY KEY(ID_Produto, ID_Fornecedor),
-	FOREIGN KEY(ID_Produto) REFERENCES Produto(ID),
-	FOREIGN KEY(ID_Fornecedor) REFERENCES Fornecedor(ID)
 )
