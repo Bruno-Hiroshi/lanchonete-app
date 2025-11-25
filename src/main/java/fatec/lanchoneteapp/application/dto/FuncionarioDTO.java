@@ -13,7 +13,7 @@ public record FuncionarioDTO(
         LocalDate dataContrato,
         Cargo cargo
 ) {
-    static CargoMapper cargomapper = new CargoMapper();
+    static CargoMapper cargoMapper = new CargoMapper();
 
     public int getId(){
         return id;
@@ -25,6 +25,6 @@ public record FuncionarioDTO(
     public String getCargo() { return cargo.getNome(); }
     public double getSalario() { return cargo.getSalario(); }
     public CargoDTO getCargoDTO(){
-        return cargomapper.toDTO(cargo);
+        return cargoMapper.toDTO(cargo);
     }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.ProdutoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.produto.ProdutoFormController">
 
     <center>
         <GridPane prefWidth="353.0" BorderPane.alignment="CENTER">
@@ -26,15 +26,15 @@
                 <Label text="Nome" />
                 <Label text="Estoque" GridPane.rowIndex="1" />
                 <Label text="Valor Unitário" GridPane.rowIndex="2" />
-                <Label text="Categoria" GridPane.rowIndex="4" />
+                <Label text="Categoria" GridPane.rowIndex="3" />
 
                 <TextField fx:id="tfNomeProduto" prefHeight="25.0" prefWidth="459.0" promptText="Nome" GridPane.columnIndex="1" />
-                <TextField fx:id="tfEstoqueProduto" prefHeight="25.0" prefWidth="200.0" promptText="Quantidade em Estoque" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="tfValorProduto" promptText="Valor Unitário" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="tfQtdEstoqueProduto" prefHeight="25.0" prefWidth="200.0" promptText="Quantidade em Estoque" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="tfValorUnitProduto" promptText="Valor Unitário" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <ComboBox fx:id="cbCategoriaProduto" promptText="Selecione" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Fornecedor" GridPane.rowIndex="3" />
-            <TextField fx:id="tfFornecedor" promptText="Nome do Fornecedor" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <ComboBox fx:id="cbCategoriaProduto" promptText="Selecione" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Fornecedor" GridPane.rowIndex="4" />
+            <TextField fx:id="tfFornecedorProduto" promptText="Nome do Fornecedor" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             </children>
             <BorderPane.margin>
                 <Insets />
@@ -45,8 +45,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="485.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnSalvarProduto" mnemonicParsing="false" text="Salvar" />
-                <Button fx:id="btnVoltarProduto" mnemonicParsing="false" text="Voltar">
+                <Button fx:id="btnSalvarProduto" mnemonicParsing="false" onAction="#onSalvarClick" text="Salvar" />
+                <Button fx:id="btnVoltarProduto" mnemonicParsing="false" onAction="#onVoltarClick" text="Voltar">
                     <HBox.margin>
                         <Insets left="5.0" />
                     </HBox.margin>

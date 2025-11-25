@@ -4,12 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.ProdutoController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.produto.ProdutoController">
     <bottom>
         <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnInserirProduto" mnemonicParsing="false" text="Inserir" />
-                <Button fx:id="btnBuscarProduto" mnemonicParsing="false" text="Buscar" />
+                <Button fx:id="btnInserirProduto" mnemonicParsing="false" onAction="#onInserirClick" text="Inserir" />
+                <Button fx:id="btnBuscarProduto" mnemonicParsing="false" onAction="#onBuscarClick" text="Buscar" />
             </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -27,7 +27,7 @@
             </rowConstraints>
             <children>
                 <Label alignment="CENTER" text="Lista de Produtos" />
-                <TextField fx:id="tfBuscarProduto" promptText="Buscar por ID" GridPane.rowIndex="1" />
+                <TextField fx:id="tfBuscarProduto" onAction="#onBuscarClick" promptText="Buscar por ID" GridPane.rowIndex="1" />
             </children>
         </GridPane>
     </top>
@@ -41,9 +41,9 @@
                         <TableColumn fx:id="tcIDProduto" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" style="-fx-alignment: CENTER;" text="ID" />
                         <TableColumn fx:id="tcNomeProduto" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Nome" />
                         <TableColumn fx:id="tcQtdEstoqueProduto" prefWidth="112.0" style="-fx-alignment: CENTER;" text="Qtd Em Estoque" />
-                        <TableColumn fx:id="tcDataContratoProduto" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Data Contrato" />
                         <TableColumn fx:id="tcValorUnitProduto" prefWidth="108.0" style="-fx-alignment: CENTER;" text="Valor Unitário" />
-                        <TableColumn fx:id="tCategoriaProduto" prefWidth="87.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                        <TableColumn fx:id="tcCategoriaProduto" prefWidth="87.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                        <TableColumn fx:id="tcFornecedorProduto" prefWidth="87.0" style="-fx-alignment: CENTER;" text="Fornecedor" />
                         <TableColumn fx:id="tcAcoesProduto" minWidth="100.0" prefWidth="100.0" sortable="false" style="-fx-alignment: CENTER;" text="Ações" />
                      </columns>
                      <columnResizePolicy>
