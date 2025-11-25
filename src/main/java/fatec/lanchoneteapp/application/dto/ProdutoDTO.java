@@ -2,7 +2,6 @@ package fatec.lanchoneteapp.application.dto;
 
 import fatec.lanchoneteapp.application.mapper.CategoriaMapper;
 import fatec.lanchoneteapp.application.mapper.FornecedorMapper;
-import fatec.lanchoneteapp.application.mapper.ProdutoMapper;
 import fatec.lanchoneteapp.domain.entity.Categoria;
 import fatec.lanchoneteapp.domain.entity.Fornecedor;
 

@@ -5,6 +5,7 @@ import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Produto;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ItemPedidoService {
     private final RepositoryNoReturn<ItemPedido> repository;
@@ -57,5 +58,15 @@ public class ItemPedidoService {
      */
     public ItemPedido buscarItem(int nPedido, Produto produto) throws SQLException {
         return repository.buscarPorID(new ItemPedido(nPedido, produto));
+    }
+
+    /**
+     * Lista todos os itens de um pedido específico.
+     *
+     * @return uma lisa de ItemPedido 
+     * @throws SQLException caso ocorra erro ao consultar o banco de dados
+     */
+    public List<ItemPedido> listarItens() throws SQLException {
+        return repository.listar();
     }
 }

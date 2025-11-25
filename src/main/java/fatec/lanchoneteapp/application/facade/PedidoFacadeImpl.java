@@ -1,6 +1,8 @@
 package fatec.lanchoneteapp.application.facade;
 
+import fatec.lanchoneteapp.application.dto.ItemPedidoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
+import fatec.lanchoneteapp.application.mapper.ItemPedidoMapper;
 import fatec.lanchoneteapp.application.mapper.PedidoMapper;
 import fatec.lanchoneteapp.application.service.ClienteService;
 import fatec.lanchoneteapp.application.service.ItemPedidoService;
@@ -23,7 +25,8 @@ public class PedidoFacadeImpl implements PedidoFacade{
     private final ClienteService clienteService;
 
     private final ManterPedidoUseCase manterPedidoUC = new ManterPedidoUseCase();
-    private final PedidoMapper mapper = new PedidoMapper();
+    private final PedidoMapper pedidoMapper = new PedidoMapper();
+    private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
     public PedidoFacadeImpl(PedidoService pedidoService,
                             ItemPedidoService itemPedidoService,
@@ -36,26 +39,26 @@ public class PedidoFacadeImpl implements PedidoFacade{
     }
 
     @Override
-    public PedidoDTO criarPedido(int clienteId, List<ItemPedido> itensPedido) throws SQLException {
+    public PedidoDTO criarPedido(PedidoDTO pedidoDTO) throws SQLException {
         Pedido pedido = new Pedido();
-        Cliente cliente = clienteService.buscarCliente(clienteId);
+        Cliente cliente = clienteService.buscarCliente(pedidoDTO.cliente().getId());
 
-        manterPedidoUC.criarPedido(pedido, cliente, itensPedido);
+        manterPedidoUC.criarPedido(pedido, cliente, pedidoDTO.itensPedido());
 
         pedido.setnPedido(pedidoService.criarPedido(pedido));
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
     public PedidoDTO buscarPedido(int nPedido) throws SQLException {
         Pedido pedido = pedidoService.buscarPedido(nPedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
     public List<PedidoDTO> listarPedidos() throws SQLException {
         return pedidoService.listarPedidos().stream()
-                .map(mapper::toDTO)
+                .map(pedidoMapper::toDTO)
                 .toList();
     }
 
@@ -66,54 +69,66 @@ public class PedidoFacadeImpl implements PedidoFacade{
         manterPedidoUC.atualizarStatus(pedido, "Cancelado");
 
         pedidoService.atualizarPedido(pedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
-    public PedidoDTO adicionarProduto(int nPedido, Produto produto, int qtd) throws SQLException, IllegalArgumentException {
-        Pedido pedido = pedidoService.buscarPedido(nPedido);
-        produto = produtoService.buscarProduto(produto.getId());
-        ItemPedido item = new ItemPedido(nPedido, produto, qtd);
+    public PedidoDTO adicionarProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException, IllegalArgumentException {
+        Pedido pedido = pedidoService.buscarPedido(itemPedidoDTO.nPedido());
+        Produto produto = produtoService.buscarProduto(itemPedidoDTO.produto().getId());
+        ItemPedido item = new ItemPedido(itemPedidoDTO.nPedido(), produto, itemPedidoDTO.qtd());
 
         manterPedidoUC.adicionarItem(pedido, produto, item);
 
         produtoService.atualizarProduto(produto);
         itemPedidoService.adicionarItem(item);
         pedidoService.atualizarPedido(pedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
-    public PedidoDTO removerProduto(int nPedido, Produto produto) throws SQLException {
-        Pedido pedido = pedidoService.buscarPedido(nPedido);
-        ItemPedido item = itemPedidoService.buscarItem(nPedido, produto);
+    public PedidoDTO removerProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException {
+        Pedido pedido = pedidoService.buscarPedido(itemPedidoDTO.nPedido());
+        ItemPedido item = itemPedidoService.buscarItem(itemPedidoDTO.nPedido(), itemPedidoDTO.produto());
 
         manterPedidoUC.removerItem(pedido, item);
 
         itemPedidoService.removerItem(item);
         pedidoService.atualizarPedido(pedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
-    public PedidoDTO atualizarQuantidadeProduto(int nPedido, Produto produto, int novaQtd) throws SQLException {
-        ItemPedido item = itemPedidoService.buscarItem(nPedido, produto);
-        Pedido pedido = pedidoService.buscarPedido(nPedido);
+    public PedidoDTO atualizarQuantidadeProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException {
+        ItemPedido item = itemPedidoService.buscarItem(itemPedidoDTO.nPedido(), itemPedidoDTO.produto());
+        Pedido pedido = pedidoService.buscarPedido(itemPedidoDTO.nPedido());
 
-        manterPedidoUC.atualizarQuantidadeItem(pedido, item, novaQtd);
+        manterPedidoUC.atualizarQuantidadeItem(pedido, item, itemPedidoDTO.qtd());
 
         itemPedidoService.atualizarQuantidade(item);
         pedidoService.atualizarPedido(pedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     @Override
-    public PedidoDTO atualizarStatus(int nPedido, String novoStatus) throws SQLException {
-        Pedido pedido = pedidoService.buscarPedido(nPedido);
+    public PedidoDTO atualizarStatus(PedidoDTO pedidoDTO) throws SQLException {
+        Pedido pedido = pedidoService.buscarPedido(pedidoDTO.nPedido());
 
-        manterPedidoUC.atualizarStatus(pedido, novoStatus);
+        manterPedidoUC.atualizarStatus(pedido, pedidoDTO.status());
 
         pedidoService.atualizarPedido(pedido);
-        return mapper.toDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
+    }
+
+    @Override
+    public void atualizarPedido(PedidoDTO pedidoDTO) throws SQLException {
+        pedidoService.atualizarPedido(pedidoMapper.toEntity(pedidoDTO));
+    }
+
+    @Override
+    public List<ItemPedidoDTO> listarProdutos() throws SQLException {
+        return itemPedidoService.listarItens().stream()
+                .map(itemPedidoMapper::toDTO)
+                .toList();
     }
 }

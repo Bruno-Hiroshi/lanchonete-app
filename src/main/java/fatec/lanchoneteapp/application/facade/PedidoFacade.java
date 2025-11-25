@@ -2,8 +2,6 @@ package fatec.lanchoneteapp.application.facade;
 
 import fatec.lanchoneteapp.application.dto.ItemPedidoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
-import fatec.lanchoneteapp.domain.entity.ItemPedido;
-import fatec.lanchoneteapp.domain.entity.Produto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,13 +12,12 @@ public interface PedidoFacade {
     // --- PEDIDO ---
 
     /**
-     * Cria um novo pedido para um cliente específico com uma lista de produtos.
+     * Cria um novo pedido para um cliente específico.
      *
-     * @param clienteId o ID do cliente para quem o pedido está sendo criado
-     * @param itensPedido  a lista de itens a serem incluídos no pedido
+     * @param pedidoDTO um objeto PedidoDTO contendo os dados do pedido
      * @return os detalhes do pedido criado encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO criarPedido(int clienteId, List<ItemPedido> itensPedido) throws SQLException;
+    PedidoDTO criarPedido(PedidoDTO pedidoDTO) throws SQLException;
 
     /**
      * Busca os detalhes de um pedido específico com base no seu ID.
@@ -29,6 +26,13 @@ public interface PedidoFacade {
      * @return os detalhes do pedido encapsulados em um objeto PedidoDTO
      */
     PedidoDTO buscarPedido(int nPedido) throws SQLException;
+
+    /**
+     * Atualiza os dados de um pedido existente no sistema.
+     *
+     * @param pedidoDTO um objeto PedidoDTO contendo os dados atualizados do pedido
+     */
+    void atualizarPedido(PedidoDTO pedidoDTO) throws SQLException;
 
     /**
      * Lista todos os pedidos cadastrados no sistema.
@@ -58,26 +62,30 @@ public interface PedidoFacade {
      * @param qtdEstoque a quantidade do produto a ser adicionada ao pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO adicionarProduto(int nPedido, Produto produto, int qtdEstoque) throws SQLException, IllegalArgumentException;
+    PedidoDTO adicionarProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException, IllegalArgumentException;
 
     /**
      * Remove um produto de um pedido existente com base no ID do pedido e no ID do produto.
      *
-     * @param nPedido o ID do pedido do qual o produto será removido
-     * @param produtoId o ID do produto a ser removido do pedido
+     * @param itemPedidoDTO objeto com nPedido e produtoId a ser removido do pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO removerProduto(int nPedido, Produto produto) throws SQLException;
+    PedidoDTO removerProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException;
 
     /**
      * Atualiza a quantidade de um produto específico em um pedido existente.
      *
-     * @param nPedido        o ID do pedido no qual a quantidade do produto será atualizada
-     * @param produtoId      o ID do produto cuja quantidade será alterada
-     * @param novaQuantidade a nova quantidade a ser definida para o produto no pedido
+     * @param itemPedidoDTO objeto com nPedido, produtoId e qtd a ser atualizada no pedido
      * @return os detalhes atualizados do pedido encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO atualizarQuantidadeProduto(int nPedido, Produto produto, int novaQuantidade) throws SQLException;
+    PedidoDTO atualizarQuantidadeProduto(ItemPedidoDTO itemPedidoDTO) throws SQLException;
+
+    /**
+     * Lista todos os produtos adicionados a um pedido.
+     *
+     * @return uma lista de objetos ItemPedidoDTO representando os produtos disponíveis
+     */
+    List<ItemPedidoDTO> listarProdutos() throws SQLException;
 
     // --- STATUS ---
 
@@ -88,9 +96,5 @@ public interface PedidoFacade {
      * @param novoStatus o novo status a ser atribuído ao pedido
      * @return os detalhes do pedido atualizado encapsulados em um objeto PedidoDTO
      */
-    PedidoDTO atualizarStatus(int nPedido, String novoStatus) throws SQLException;
-
-
-    //TODO: IMPLEMENTAR
-    ItemPedidoDTO listarProdutos();
+    PedidoDTO atualizarStatus(PedidoDTO pedidoDTO) throws SQLException;
 }

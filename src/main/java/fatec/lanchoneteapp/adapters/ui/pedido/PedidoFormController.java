@@ -3,7 +3,7 @@ package fatec.lanchoneteapp.adapters.ui.pedido;
 import fatec.lanchoneteapp.adapters.ui.controller.Controller;
 import fatec.lanchoneteapp.adapters.ui.controller.IController;
 import fatec.lanchoneteapp.adapters.ui.controller.IFormController;
-import fatec.lanchoneteapp.adapters.ui.pedido.itemPedido.ItemPedidoController;
+import fatec.lanchoneteapp.adapters.ui.pedido.itemPedido.ItemPedidoFormController;
 import fatec.lanchoneteapp.application.dto.ClienteDTO;
 import fatec.lanchoneteapp.application.dto.ItemPedidoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
@@ -66,7 +66,7 @@ public class PedidoFormController extends Controller implements IController<Item
         ));
         Parent form = loader.load();
 
-        ItemPedidoController controller = loader.getController();
+        ItemPedidoFormController controller = loader.getController();
         controller.setPedidoFacade(pedidoFacade);
 
         Stage stage = new Stage();
@@ -85,7 +85,7 @@ public class PedidoFormController extends Controller implements IController<Item
         ));
         Parent form = loader.load();
 
-        ItemPedidoController controller = loader.getController();
+        ItemPedidoFormController controller = loader.getController();
         controller.setPedidoFacade(pedidoFacade);
         controller.setCampos(itemPedido);
 
@@ -100,18 +100,17 @@ public class PedidoFormController extends Controller implements IController<Item
 
     @Override
     public void onRemoverClick(ItemPedidoDTO itemPedidoDTO) {
-        //TODO: IMPLEMENTAR
-//        try{
-//            pedidoFacade.removerProduto();
-//        } catch (SQLException e) {
-//            criarErrorAlert("Erro", e.getMessage());
-//        }
+       try{
+           pedidoFacade.removerProduto(itemPedidoDTO);
+       } catch (SQLException e) {
+           criarErrorAlert("Erro", e.getMessage());
+       }
     }
 
 
     @Override
     public void onBuscarClick() {
-
+        //implementar busca na tabela de itens do pedido
     }
 
     @FXML
@@ -165,7 +164,7 @@ public class PedidoFormController extends Controller implements IController<Item
 
         try {
             itensObservableList.clear();
-            itensObservableList.addAll(pedidoFacade.listarProdutos()); //TODO: LISTAR PRODUTOS DO PEDIDO NA pedidoFacade
+            itensObservableList.addAll(pedidoFacade.listarProdutos());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -192,22 +191,20 @@ public class PedidoFormController extends Controller implements IController<Item
                     clienteMapper.toEntity(clienteSelecionado)
             );
 
+           try {
+                pedidoFacade.atualizarPedido(pedidoDTO);
 
-            //ATUALIZAR PEDIDO (CRIAR METODO NA FACADE E SERVICE)
-//            try {
-//
-//
-//                criarInfoAlert("Sucesso!", "Produto atualizado com sucesso.");
-//                onVoltarClick();
-//            } catch (ProdutoInvalidoException e) {
-//                criarErrorAlert("Produto inválido!", e.getMessage());
-//            } catch (SQLException sql) {
-//                criarErrorAlert("Ocorreu um erro", sql.getMessage());
-//            }
+                criarInfoAlert("Sucesso!", "Produto atualizado com sucesso.");
+                onVoltarClick();
+           } catch (ProdutoInvalidoException e) {
+               criarErrorAlert("Produto inválido!", e.getMessage());
+           } catch (SQLException sql) {
+               criarErrorAlert("Ocorreu um erro", sql.getMessage());
+           }
         }
         else {
             PedidoDTO pedidoDTO = new PedidoDTO(
-                    nPedido,
+                    0,
                     Double.parseDouble(tfValorTotal.getText()),
                     itensObservableList.stream().map(itemPedidoMapper::toEntity).toList(),
                     dpDataPedido.getValue(),
@@ -216,7 +213,7 @@ public class PedidoFormController extends Controller implements IController<Item
             );
 
             try {
-                pedidoFacade.criarPedido(clienteSelecionado.id(), itensObservableList.stream().map(itemPedidoMapper::toEntity).toList());
+                pedidoFacade.criarPedido(pedidoDTO);
 
                 criarInfoAlert("Sucesso!", "Pedido inserido com sucesso");
                 onVoltarClick();
@@ -312,7 +309,7 @@ public class PedidoFormController extends Controller implements IController<Item
         try {
             clientes = cadastroFacade.listarClientes();
         } catch (SQLException e) {
-            criarErrorAlert("Erro ao acessar o banco de dados", "Não foi possível carregar os fornecedores:\n" + e.getMessage());
+            criarErrorAlert("Erro ao acessar o banco de dados", "Não foi possível carregar os clientes:\n" + e.getMessage());
         }
     }
 }

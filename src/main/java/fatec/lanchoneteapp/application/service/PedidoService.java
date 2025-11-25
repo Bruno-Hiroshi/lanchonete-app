@@ -1,7 +1,6 @@
 package fatec.lanchoneteapp.application.service;
 
 import fatec.lanchoneteapp.application.repository.RepositoryReturn;
-import fatec.lanchoneteapp.domain.entity.Cliente;
 import fatec.lanchoneteapp.domain.entity.Pedido;
 
 import java.sql.SQLException;
