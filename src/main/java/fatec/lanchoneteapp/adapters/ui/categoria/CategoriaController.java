@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import fatec.lanchoneteapp.adapters.ui.controller.Controller;
 import fatec.lanchoneteapp.adapters.ui.controller.IController;
 import fatec.lanchoneteapp.application.dto.CategoriaDTO;
+import fatec.lanchoneteapp.application.exception.CategoriaNaoEncontradaException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +49,7 @@ public class CategoriaController extends Controller implements Initializable, IC
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         categoriasObservableList = FXCollections.observableArrayList();
         tvListaCategorias.setItems(categoriasObservableList);
 
@@ -66,6 +67,7 @@ public class CategoriaController extends Controller implements Initializable, IC
                     onRemoverClick(tvListaCategorias.getItems().get(getIndex()));
                 }
             );
+            btnApagar.setPrefWidth(100);
 
             btnEditar.setOnAction(click -> { 
                     try {
@@ -75,13 +77,19 @@ public class CategoriaController extends Controller implements Initializable, IC
                     }
                 }
             );
+            btnEditar.setPrefWidth(100);
+        }
+
+        private final HBox hbox = new HBox(5, btnEditar, btnApagar);
+        {
+            hbox.setStyle("-fx-alignment: CENTER;");
         }
 
         @Override
         public void updateItem(Void item, boolean empty) { 
             super.updateItem(item, empty);
             if (!empty) { 
-                setGraphic( new HBox(btnApagar, btnEditar) );
+                setGraphic( hbox );
             } else { 
                 setGraphic( null );
             }
@@ -92,7 +100,7 @@ public class CategoriaController extends Controller implements Initializable, IC
     @Override
     public void onInserirClick() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                "/fatec/lanchoneteapp/run/cargo/CadastroCategoria.fxml"
+                "/fatec/lanchoneteapp/run/categoria/CadastroCategoria.fxml"
         ));
         Parent form = loader.load();
 
@@ -112,7 +120,7 @@ public class CategoriaController extends Controller implements Initializable, IC
     @Override
     public void onAtualizarClick(CategoriaDTO categoria) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                "/fatec/lanchoneteapp/run/cargo/CadastroCategoria.fxml"
+                "/fatec/lanchoneteapp/run/categoria/CadastroCategoria.fxml"
         ));
         Parent form = loader.load();
 
@@ -153,7 +161,10 @@ public class CategoriaController extends Controller implements Initializable, IC
             categoriasObservableList.addAll(
                 cadastroFacade.buscarCategoria(Integer.parseInt(tfBuscarCategoria.getText()))
             );
-        } catch (SQLException e) {
+        } catch (CategoriaNaoEncontradaException e){
+            criarWarningAlert("Aviso", e.getMessage());
+        }
+        catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }
     }
@@ -161,14 +172,14 @@ public class CategoriaController extends Controller implements Initializable, IC
     @FXML
     @Override
     public void carregarTabela() {
-        tcIDCategoria.setCellValueFactory(new PropertyValueFactory<CategoriaDTO, Integer>("id"));
-        tcNomeCategoria.setCellValueFactory(new PropertyValueFactory<CategoriaDTO, String>("nome"));
-        tcDescricaoCategoria.setCellValueFactory(new PropertyValueFactory<CategoriaDTO, String>("descricao"));
+        tcIDCategoria.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tcNomeCategoria.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tcDescricaoCategoria.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcAcoesCategoria.setCellFactory(fabricanteColunaAcoes);
 
         try {
             categoriasObservableList.clear();
-            categoriasObservableList.addAll(cadastroFacade.listarCategorias());
+            categoriasObservableList.addAll(cadastroFacade.listarCategorias().stream().toList());
         } catch (SQLException e) {
             criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
         }

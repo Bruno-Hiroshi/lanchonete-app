@@ -15,9 +15,11 @@ public class CategoriaService {
         this.repository = repository;
     }
 
-    public void criarCategoria(Categoria categoria) throws SQLException {
+    public void criarCategoria(Categoria categoria) throws SQLException, CategoriaInvalidaException {
         if(!validarCategoria(categoria))
             throw new CategoriaInvalidaException("Categoria já cadastrada");
+
+        repository.salvar(categoria);
     }
 
     public Categoria buscarCategoria(int idCategoria) throws SQLException, CategoriaNaoEncontradaException {

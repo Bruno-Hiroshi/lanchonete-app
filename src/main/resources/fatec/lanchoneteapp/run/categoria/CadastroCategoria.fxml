@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.CategoriaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.lanchoneteapp.adapters.ui.categoria.CategoriaFormController">
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -27,8 +27,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="595.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnSalvarCategoria" mnemonicParsing="false" text="Salvar" />
-                <Button fx:id="btnVoltarCategoria" mnemonicParsing="false" text="Voltar" />
+                <Button fx:id="btnSalvarCategoria" mnemonicParsing="false" onAction="#onSalvarClick" text="Salvar" />
+                <Button fx:id="btnVoltarCategoria" mnemonicParsing="false" onAction="#onVoltarClick" text="Voltar" />
             </children>
         </HBox>
     </bottom>

@@ -55,7 +55,7 @@ public class CategoriaFormController extends Controller implements IFormControll
             }
         }
         else {
-            // Criar nova Categoria
+            // Criar Categoria
             CategoriaDTO categoriaDTO = new CategoriaDTO(
                 0,
                 tfNomeCategoria.getText(),

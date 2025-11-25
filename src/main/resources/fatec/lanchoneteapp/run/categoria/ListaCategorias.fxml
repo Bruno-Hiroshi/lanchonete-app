@@ -8,8 +8,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnInserirCategoria" mnemonicParsing="false" text="Inserir" />
-                <Button fx:id="btnBuscarCategoria" mnemonicParsing="false" text="Buscar" />
+                <Button fx:id="btnInserirCategoria" mnemonicParsing="false" onAction="#onInserirClick" text="Inserir" />
+                <Button fx:id="btnBuscarCategoria" mnemonicParsing="false" onAction="#onBuscarClick" text="Buscar" />
             </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -27,7 +27,7 @@
             </rowConstraints>
             <children>
                 <Label alignment="CENTER" text="Lista de Categorias" />
-                <TextField fx:id="tfBuscarCategoria" promptText="Buscar por ID" GridPane.rowIndex="1" />
+                <TextField fx:id="tfBuscarCategoria" onAction="#onBuscarClick" promptText="Buscar por ID" GridPane.rowIndex="1" />
             </children>
         </GridPane>
     </top>
