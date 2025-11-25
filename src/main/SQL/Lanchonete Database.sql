@@ -58,7 +58,7 @@ CREATE TABLE Produto(
 	ID_Fornecedor INT NOT NULL,
 	PRIMARY KEY(ID),
 	FOREIGN KEY(ID_Categoria) REFERENCES Categoria(ID),
-	FOREIGN KEY(ID_Fornecedor) REFERENCES Fornecedor(ID)
+	FOREIGN KEY(ID_Fornecedor) REFERENCES Fornecedor(ID),
 )
 
 CREATE TABLE Fornecedor(
