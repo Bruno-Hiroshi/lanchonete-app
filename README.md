@@ -88,7 +88,7 @@ Abaixo estão os principais diagramas que representam a arquitetura e o fluxo da
 
 ### 1. Diagrama de Pacotes
 > Estrutura geral dos módulos seguindo Clean Architecture.
-![Diagrama de Pacotes](docs/diagrams/pkg-diagram.png)
+![Diagrama de Pacotes](docs/diagrams/pkgDiagram.png)
 
 ### 2. Diagrama de Classes
 ![Diagrama de Classes](docs/diagrams/class-diagram.png)
