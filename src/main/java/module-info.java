@@ -34,4 +34,6 @@ module fatec.lanchoneteapp {
     exports fatec.lanchoneteapp.adapters.repository.db;
     exports fatec.lanchoneteapp.application.service;
     exports fatec.lanchoneteapp.domain.entity;
+    exports fatec.lanchoneteapp.adapters.ui.funcionario;
+    opens fatec.lanchoneteapp.adapters.ui.funcionario to javafx.fxml;
 }
