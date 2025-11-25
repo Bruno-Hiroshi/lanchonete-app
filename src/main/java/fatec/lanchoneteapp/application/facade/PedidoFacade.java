@@ -1,6 +1,5 @@
 package fatec.lanchoneteapp.application.facade;
 
-import fatec.lanchoneteapp.application.dto.HistoricoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Produto;
@@ -89,16 +88,4 @@ public interface PedidoFacade {
      * @return os detalhes do pedido atualizado encapsulados em um objeto PedidoDTO
      */
     PedidoDTO atualizarStatus(int nPedido, String novoStatus) throws SQLException;
-
-    // --- HISTÓRICO ---
-
-    /**
-     * Lista o histórico de alterações ou eventos relacionados a um pedido específico.
-     *
-     * @param nPedido o ID do pedido cujo histórico será listado
-     * @return uma lista de objetos HistoricoDTO representando as entradas no histórico do pedido
-     */
-    List<HistoricoDTO> listarHistorico(int nPedido) throws SQLException;
-
-
 }

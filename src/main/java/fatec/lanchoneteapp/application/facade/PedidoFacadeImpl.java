@@ -1,6 +1,5 @@
 package fatec.lanchoneteapp.application.facade;
 
-import fatec.lanchoneteapp.application.dto.HistoricoDTO;
 import fatec.lanchoneteapp.application.dto.PedidoDTO;
 import fatec.lanchoneteapp.application.mapper.PedidoMapper;
 import fatec.lanchoneteapp.application.service.ClienteService;
@@ -116,12 +115,5 @@ public class PedidoFacadeImpl implements PedidoFacade{
 
         pedidoService.atualizarPedido(pedido);
         return mapper.toDTO(pedido);
-    }
-
-    @Override
-    public List<HistoricoDTO> listarHistorico(int idCliente) throws SQLException {
-        return pedidoService.listarHistorico(new Cliente(idCliente)).stream()
-                .map(mapper::toHistoricoDTO)
-                .toList();
     }
 }

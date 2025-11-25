@@ -142,43 +142,6 @@ public class PedidoRepository implements RepositoryReturn<Pedido> {
         return entidades;
     }
 
-    public List<Pedido> historicoPedidos(Cliente cliente) throws SQLException{
-        StringBuilder sql = new StringBuilder();
-        sql.append("SELECT p.Num_Pedido, p.ValorTotal, p.DataPedido, p.StatusPedido, ");
-        sql.append("c.ID, c.Nome, c.Telefone, c.Logradouro, c.Numero, c.CEP, c.Complemento ");
-        sql.append("FROM Pedido p INNER JOIN Cliente c ");
-        sql.append("ON p.ID_Cliente = c.ID ");
-        sql.append("WHERE p.ID_Cliente = ?");
-        PreparedStatement ps = connection.prepareStatement(sql.toString());
-        ps.setInt(1, cliente.getId());
-
-        List<Pedido> entidades = new ArrayList<>();
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()){
-            cliente.setId(rs.getInt("ID"));
-            cliente.setNome(rs.getString("Nome"));
-            cliente.setTel(rs.getString("Telefone"));
-            cliente.setLogradouro(rs.getString("Logradouro"));
-            cliente.setNumero(rs.getInt("Numero"));
-            cliente.setCep(rs.getString("CEP"));
-            cliente.setComplemento(rs.getString("Complemento"));
-
-            Pedido entidade = new Pedido();
-            entidade.setnPedido(rs.getInt("Num_Pedido"));
-            entidade.setValorTotal(rs.getDouble("ValorTotal"));
-            entidade.setData(rs.getDate("DataPedido").toLocalDate());
-            entidade.setStatus(rs.getString("StatusPedido"));
-            entidade.setCliente(cliente);
-
-            entidades.add(entidade);
-        }
-
-        rs.close();
-        ps.close();
-        return entidades;
-    }
-
     @Override
     public Pedido buscarPorChaveSecundaria(Pedido entidade) throws SQLException {
         StringBuilder sql = new StringBuilder();
