@@ -5,6 +5,7 @@ import fatec.lanchoneteapp.adapters.ui.categoria.CategoriaController;
 import fatec.lanchoneteapp.adapters.ui.cliente.ClienteController;
 import fatec.lanchoneteapp.adapters.ui.fornecedor.FornecedorController;
 import fatec.lanchoneteapp.adapters.ui.funcionario.FuncionarioController;
+import fatec.lanchoneteapp.adapters.ui.pedido.PedidoController;
 import fatec.lanchoneteapp.adapters.ui.produto.ProdutoController;
 import fatec.lanchoneteapp.config.AppBuilder;
 import javafx.application.Application;
@@ -43,6 +44,9 @@ public class Main extends Application {
             }
             if (type == ProdutoController.class) {
                 return new ProdutoController(builder.getCadastroFacade());
+            }
+            if (type == PedidoController.class) {
+                return new PedidoController(builder.getPedidoFacade());
             }
 
             // fallback padrão
