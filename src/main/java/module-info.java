@@ -38,4 +38,8 @@ module fatec.lanchoneteapp {
     opens fatec.lanchoneteapp.adapters.ui.funcionario to javafx.fxml;
     exports fatec.lanchoneteapp.adapters.ui.produto;
     opens fatec.lanchoneteapp.adapters.ui.produto to javafx.fxml;
+    exports fatec.lanchoneteapp.adapters.ui.pedido;
+    opens fatec.lanchoneteapp.adapters.ui.pedido to javafx.fxml;
+    exports fatec.lanchoneteapp.adapters.ui.pedido.itemPedido;
+    opens fatec.lanchoneteapp.adapters.ui.pedido.itemPedido to javafx.fxml;
 }
