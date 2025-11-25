@@ -10,8 +10,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="595.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnSalvarPedido" mnemonicParsing="false" text="Salvar" />
-                <Button fx:id="btnVoltarPedido" mnemonicParsing="false" text="Voltar" />
+                <Button fx:id="btnSalvarPedido" mnemonicParsing="false" onAction="#onSalvarClick" text="Salvar" />
+                <Button fx:id="btnVoltarPedido" mnemonicParsing="false" onAction="#onVoltarClick" text="Voltar" />
             </children>
          <BorderPane.margin>
             <Insets bottom="5.0" right="10.0" />
@@ -75,7 +75,7 @@
                            <bottom>
                               <HBox prefHeight="20.0" prefWidth="460.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Inserir Item" />
+                                    <Button mnemonicParsing="false" onAction="#onInserirClick" text="Inserir Item" />
                                  </children>
                               </HBox>
                            </bottom>
