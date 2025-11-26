@@ -49,18 +49,6 @@ CREATE TABLE Categoria(
 	PRIMARY KEY(ID)
 )
 
-CREATE TABLE Produto(
-	ID INT NOT NULL IDENTITY(1,1),
-	Nome VARCHAR(50) NOT NULL,
-	QtdEstoque INT NOT NULL CHECK(QtdEstoque >= 0),
-	ValorUnit DECIMAL(7,2) NOT NULL CHECK(ValorUnit > 0),
-	ID_Categoria INT NOT NULL,
-	ID_Fornecedor INT NOT NULL,
-	PRIMARY KEY(ID),
-	FOREIGN KEY(ID_Categoria) REFERENCES Categoria(ID),
-	FOREIGN KEY(ID_Fornecedor) REFERENCES Fornecedor(ID),
-)
-
 CREATE TABLE Fornecedor(
 	ID INT NOT NULL IDENTITY(1, 1),
 	Nome VARCHAR(100) NOT NULL,
@@ -71,6 +59,18 @@ CREATE TABLE Fornecedor(
 	CEP CHAR(8) NOT NULL CHECK(LEN(CEP) = 8),
 	Complemento VARCHAR(255),
 	PRIMARY KEY(ID)
+)
+
+CREATE TABLE Produto(
+	ID INT NOT NULL IDENTITY(1,1),
+	Nome VARCHAR(50) NOT NULL,
+	QtdEstoque INT NOT NULL CHECK(QtdEstoque >= 0),
+	ValorUnit DECIMAL(7,2) NOT NULL CHECK(ValorUnit > 0),
+	ID_Categoria INT NOT NULL,
+	ID_Fornecedor INT NOT NULL,
+	PRIMARY KEY(ID),
+	FOREIGN KEY(ID_Categoria) REFERENCES Categoria(ID),
+	FOREIGN KEY(ID_Fornecedor) REFERENCES Fornecedor(ID),
 )
 
 CREATE TABLE Item_Pedido(
