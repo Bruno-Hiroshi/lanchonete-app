@@ -115,9 +115,10 @@ public class PedidoFacadeImpl implements PedidoFacade{
 
     @Override
     public PedidoDTO atualizarQuantidadeItem(ItemPedidoDTO itemPedidoDTO) throws SQLException {
-        ItemPedido item = itemPedidoService.buscarItem(itemPedidoDTO.nPedido(), itemPedidoDTO.produto());
+        ItemPedido item =  itemPedidoMapper.toEntity(itemPedidoDTO);
         Pedido pedido = pedidoService.buscarPedido(itemPedidoDTO.nPedido());
-
+        
+        manterPedidoUC.adicionarItem(pedido, item.getProduto(), item);
         manterPedidoUC.atualizarQuantidadeItem(pedido, item, itemPedidoDTO.qtd());
 
         itemPedidoService.atualizarQuantidade(item);
@@ -128,6 +129,13 @@ public class PedidoFacadeImpl implements PedidoFacade{
     @Override
     public List<ItemPedidoDTO> listarItens() throws SQLException {
         return itemPedidoService.listarItens().stream()
+                .map(itemPedidoMapper::toDTO)
+                .toList();
+    }
+    
+    @Override
+    public List<ItemPedidoDTO> listarItensPorNumPedido(int nPedido) throws SQLException {
+        return itemPedidoService.listarItensPorNumPedido(nPedido).stream()
                 .map(itemPedidoMapper::toDTO)
                 .toList();
     }

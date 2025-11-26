@@ -13,6 +13,7 @@ import fatec.lanchoneteapp.application.facade.PedidoFacade;
 import fatec.lanchoneteapp.application.mapper.ClienteMapper;
 import fatec.lanchoneteapp.application.mapper.ItemPedidoMapper;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class PedidoFormController extends Controller implements IController<ItemPedidoDTO>, IFormController<PedidoDTO> {
@@ -38,27 +40,32 @@ public class PedidoFormController extends Controller implements IController<Item
     private ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
     private ClienteMapper clienteMapper = new ClienteMapper();
 
+    private int onInit = 0;
 
     @FXML private Button btnVoltarPedido;
 
     private int nPedido;
     @FXML private TextField tfNomeCliente;
     @FXML private DatePicker dpDataPedido;
-    @FXML private TextField tfStatusPedido;
+    @FXML private ComboBox<String> cbStatusPedido;
     @FXML private TextField tfValorTotal;
 
     @FXML private TableView<ItemPedidoDTO> tvListaItensPedido;
     @FXML private TableColumn<ItemPedidoDTO, Integer> tcIDProduto;
     @FXML private TableColumn<ItemPedidoDTO, String> tcNomeProduto;
-    @FXML private TableColumn<ItemPedidoDTO, Integer> tcQtdProduto;
-    @FXML private TableColumn<ItemPedidoDTO, Double> tcValorUnitProduto;
-    @FXML private TableColumn<ItemPedidoDTO, Double> tcValorTotalProduto;
-    @FXML private TableColumn<ItemPedidoDTO, Void> tcAcoesProduto;
+    @FXML private TableColumn<ItemPedidoDTO, Integer> tcQtdItemPedido;
+    @FXML private TableColumn<ItemPedidoDTO, Double> tcValorUnitItemPedido;
+    @FXML private TableColumn<ItemPedidoDTO, Double> tcValorTotalItemPedido;
+    @FXML private TableColumn<ItemPedidoDTO, Void> tcAcoesItemPedido;  
     @FXML private ObservableList<ItemPedidoDTO> itensObservableList;
 
     private ContextMenu clientesMenu;
     private List<ClienteDTO> clientes;
     private ClienteDTO clienteSelecionado;
+
+    ObservableList<String> statusPedido = FXCollections.observableArrayList(
+        "Em Preparo", "Aguardando Envio", "Enviado", "Entregue", "Cancelado"
+    );
 
     @Override
     public void onInserirClick() throws IOException {
@@ -68,8 +75,10 @@ public class PedidoFormController extends Controller implements IController<Item
         Parent form = loader.load();
 
         ItemPedidoFormController controller = loader.getController();
-        controller.setListaItensPedido(itensObservableList);
-
+        controller.setIds(-1, 0);
+        controller.setCadastroFacade(cadastroFacade);
+        controller.setListaItensPedido(itensObservableList); 
+        
         Stage stage = new Stage();
         stage.setTitle("Adicionar Item");
         stage.setScene(new Scene(form));
@@ -82,11 +91,13 @@ public class PedidoFormController extends Controller implements IController<Item
     @Override
     public void onAtualizarClick(ItemPedidoDTO itemPedido) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                "/fatec/lanchoneteapp/run/pedido/CadastroPedido.fxml"
+                "/fatec/lanchoneteapp/run/itemPedido/CadastroItemPedido.fxml"
         ));
         Parent form = loader.load();
 
         ItemPedidoFormController controller = loader.getController();
+        controller.setIds(itensObservableList.indexOf(itemPedido), itemPedido.nPedido());
+        controller.setCadastroFacade(cadastroFacade);
         controller.setListaItensPedido(itensObservableList);
         controller.setCampos(itemPedido);
 
@@ -152,12 +163,22 @@ public class PedidoFormController extends Controller implements IController<Item
 
     @Override
     public void carregarTabela() {
-        tcIDProduto.setCellValueFactory(new PropertyValueFactory<>("num"));
-        tcNomeProduto.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-        tcQtdProduto.setCellValueFactory(new PropertyValueFactory<>("dataPedido"));
-        tcValorUnitProduto.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tcValorTotalProduto.setCellValueFactory(new PropertyValueFactory<>("clienteNome"));
-        tcAcoesProduto.setCellFactory(fabricanteColunaAcoes);
+        tcIDProduto.setCellValueFactory(new PropertyValueFactory<>("idProduto"));
+        tcNomeProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        tcQtdItemPedido.setCellValueFactory(new PropertyValueFactory<>("qtd"));
+        tcValorUnitItemPedido.setCellValueFactory(new PropertyValueFactory<>("valorUnit"));
+        tcValorTotalItemPedido.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+        tcAcoesItemPedido.setCellFactory(fabricanteColunaAcoes);
+
+        if(this.nPedido > 0 && this.onInit == 0){
+            try {
+                itensObservableList.clear();
+                itensObservableList.addAll(pedidoFacade.listarItensPorNumPedido(nPedido).stream().toList());
+                onInit++;
+            } catch (SQLException e) {
+                criarErrorAlert("Ocorreu um erro", e.getMessage() + "\n" + e.getSQLState());
+            }
+        }
     }
 
     @Override
@@ -177,7 +198,7 @@ public class PedidoFormController extends Controller implements IController<Item
                     Double.parseDouble(tfValorTotal.getText()),
                     itensObservableList.stream().map(itemPedidoMapper::toEntity).toList(),
                     dpDataPedido.getValue(),
-                    tfStatusPedido.getText(),
+                    cbStatusPedido.getValue(),
                     clienteMapper.toEntity(clienteSelecionado)
             );
 
@@ -202,7 +223,7 @@ public class PedidoFormController extends Controller implements IController<Item
                     Double.parseDouble(tfValorTotal.getText()),
                     itensObservableList.stream().map(itemPedidoMapper::toEntity).toList(),
                     dpDataPedido.getValue(),
-                    tfStatusPedido.getText(),
+                    cbStatusPedido.getValue(),
                     clienteMapper.toEntity(clienteSelecionado)
             );
 
@@ -227,9 +248,21 @@ public class PedidoFormController extends Controller implements IController<Item
     public void setCampos(PedidoDTO pedido) {
         this.nPedido = pedido.nPedido();
         tfNomeCliente.setText(String.valueOf(pedido.cliente().getNome()));
-        dpDataPedido.setValue(pedido.data());
-        tfStatusPedido.setText(pedido.status());
+        dpDataPedido.setValue(pedido.dataPedido());
+        cbStatusPedido.setValue(pedido.status());
+        clienteSelecionado = pedido.getClienteDTO();
+
         tfValorTotal.setText(String.valueOf(pedido.valorTotal()));
+    }
+
+    public void setCamposDefault(){
+        this.cbStatusPedido.setDisable(true);
+        this.cbStatusPedido.setStyle("-fx-opacity: 1");
+        this.dpDataPedido.setDisable(true);
+        this.dpDataPedido.setStyle("-fx-opacity: 1");
+        this.cbStatusPedido.setValue(statusPedido.get(0));
+        this.dpDataPedido.setValue(LocalDate.now());
+        this.tfValorTotal.setText(String.valueOf(0));
     }
 
     @Override
@@ -260,6 +293,8 @@ public class PedidoFormController extends Controller implements IController<Item
         clientesMenu = new ContextMenu();
         carregarClientes();
         configurarAutocomplete();
+
+        cbStatusPedido.setItems(statusPedido);
     }
 
     private void configurarAutocomplete() {
@@ -293,13 +328,12 @@ public class PedidoFormController extends Controller implements IController<Item
 
             clientesMenu.getItems().setAll(itens);
 
-            if(!clientesMenu.isShowing()){
-                Bounds bounds = tfNomeCliente.localToScreen(tfNomeCliente.getBoundsInLocal());
-                clientesMenu.show(tfNomeCliente, bounds.getMinX(), bounds.getMaxY());
-            } else {
-                Bounds bounds = tfNomeCliente.localToScreen(tfNomeCliente.getBoundsInLocal());
-                clientesMenu.show(tfNomeCliente, bounds.getMinX(), bounds.getMaxY());
-            }
+            Platform.runLater(() -> {
+                if(!clientesMenu.isShowing()){
+                    Bounds bounds = tfNomeCliente.localToScreen(tfNomeCliente.getBoundsInLocal());
+                    clientesMenu.show(tfNomeCliente, bounds.getMinX(), bounds.getMaxY());
+                }
+            });
         });
     }
 

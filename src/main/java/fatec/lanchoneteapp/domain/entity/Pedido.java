@@ -1,6 +1,7 @@
 package fatec.lanchoneteapp.domain.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
@@ -18,6 +19,7 @@ public class Pedido {
     public Pedido(int nPedido){
         super();
         this.nPedido = nPedido;
+        this.itensPedido = new ArrayList<>();
     }
 
     public Pedido(int nPedido, double valorTotal, List<ItemPedido> itensPedido, LocalDate data, String status, Cliente cliente) {
@@ -27,6 +29,7 @@ public class Pedido {
         this.nPedido = nPedido;
         this.status = status;
         this.valorTotal = valorTotal;
+        this.itensPedido = new ArrayList<>();
     }
 
     public int getnPedido() {
@@ -67,6 +70,7 @@ public class Pedido {
     }
 
     public void calcularValorTotal(){
+        this.valorTotal = 0;
         for (ItemPedido item : itensPedido) {
             this.valorTotal += item.getValorTotal();
         }
@@ -74,14 +78,17 @@ public class Pedido {
 
     public void adicionarItem(ItemPedido item) {
         itensPedido.add(item);
+        calcularValorTotal();
     }
 
     public void removerItem(ItemPedido item) {
         itensPedido.remove(item);
+        calcularValorTotal();
     }
 
     public void atualizarQuantidadeItem(ItemPedido item, int novaQtd) {
         item.setQtd(novaQtd);
+        calcularValorTotal();
     }
 
     public void atualizarStatus(String novoStatus) {

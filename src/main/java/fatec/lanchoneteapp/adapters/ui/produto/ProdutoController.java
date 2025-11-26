@@ -2,8 +2,6 @@ package fatec.lanchoneteapp.adapters.ui.produto;
 
 import fatec.lanchoneteapp.adapters.ui.controller.Controller;
 import fatec.lanchoneteapp.adapters.ui.controller.IController;
-import fatec.lanchoneteapp.application.dto.CategoriaDTO;
-import fatec.lanchoneteapp.application.dto.FuncionarioDTO;
 import fatec.lanchoneteapp.application.dto.ProdutoDTO;
 import fatec.lanchoneteapp.application.exception.ProdutoNaoEncontradoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;

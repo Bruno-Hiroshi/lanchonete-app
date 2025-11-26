@@ -7,7 +7,7 @@ public record ItemPedidoDTO(
         int nPedido,
         Produto produto,
         int qtd,
-        double valorUn,
+        double valorUnit,
         double valorTotal
 ) {
     static ProdutoMapper produtoMapper = new ProdutoMapper();
@@ -20,12 +20,20 @@ public record ItemPedidoDTO(
         return produtoMapper.toDTO(produto);
     }
 
+    public int getIdProduto(){
+        return produto.getId();
+    }
+
+    public String getNomeProduto(){
+        return produto.getNome();
+    }
+
     public int getQtd() {
         return qtd;
     }
 
-    public double getValorUn(){
-        return valorUn;
+    public double getValorUnit(){
+        return valorUnit;
     }
 
     public double getValorTotal() {

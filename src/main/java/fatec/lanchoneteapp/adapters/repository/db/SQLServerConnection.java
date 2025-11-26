@@ -10,10 +10,10 @@ public class SQLServerConnection implements IDBConnection{
 
     @Override
     public Connection getConnection() throws ClassNotFoundException, SQLException {
-        String hostName = "";
-        String dbName = "";
-        String user = "";
-        String password = "";
+        String hostName = "localhost";
+        String dbName = "Lanchonete";
+        String user = "java";
+        String password = "java25";
 
         Class.forName("net.sourceforge.jtds.jdbc.Driver");
 

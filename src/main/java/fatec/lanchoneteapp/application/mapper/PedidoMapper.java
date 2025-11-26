@@ -28,7 +28,7 @@ public class PedidoMapper {
                 dto.nPedido(),
                 dto.valorTotal(),
                 dto.itensPedido(),
-                dto.data(),
+                dto.dataPedido(),
                 dto.status(),
                 dto.cliente()
         );

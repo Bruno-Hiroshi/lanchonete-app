@@ -87,6 +87,14 @@ public interface PedidoFacade {
      */
     List<ItemPedidoDTO> listarItens() throws SQLException;
 
+    /**
+     * Lista todos os Items adicionados a um pedido.
+     *
+     * @param nPedido número do pedido desejado
+     * @return uma lista de objetos ItemPedidoDTO representando os Itens de um pedido
+     */
+    List<ItemPedidoDTO> listarItensPorNumPedido(int nPedido) throws SQLException;
+
     // --- STATUS ---
 
     /**
@@ -97,4 +105,6 @@ public interface PedidoFacade {
      * @return os detalhes do pedido atualizado encapsulados em um objeto PedidoDTO
      */
     PedidoDTO atualizarStatus(PedidoDTO pedidoDTO) throws SQLException;
+
+    
 }

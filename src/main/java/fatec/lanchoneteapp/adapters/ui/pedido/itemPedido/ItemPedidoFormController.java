@@ -10,6 +10,7 @@ import fatec.lanchoneteapp.application.dto.ProdutoDTO;
 import fatec.lanchoneteapp.application.exception.ProdutoInvalidoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import fatec.lanchoneteapp.application.mapper.ProdutoMapper;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -22,15 +23,15 @@ import javafx.stage.Stage;
 public class ItemPedidoFormController extends Controller implements IFormController<ItemPedidoDTO> {
 
     private CadastroFacade cadastroFacade;
+    private int index;
+    private int nPedido;
     private ObservableList<ItemPedidoDTO> listaItensPedido;
-    private ItemPedidoDTO itemPedido;
     private ProdutoMapper produtoMapper = new ProdutoMapper();
 
     // Botões
     @FXML private Button btnVoltarItemPedido;
 
     //Campos
-    private int numPedido;
     @FXML private TextField tfProdutoItemPedido;
     @FXML private TextField tfQuantidadeItemPedido;
     @FXML private TextField tfValorUnitItemPedido;
@@ -51,17 +52,18 @@ public class ItemPedidoFormController extends Controller implements IFormControl
         if(!validarCampos())
             return;
 
-        if(numPedido > 0){
-            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO(
-                numPedido,
+        if(index >= 0){
+             ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO(
+                nPedido,
                 produtoMapper.toEntity(produtoSelecionado),
                 Integer.parseInt(tfQuantidadeItemPedido.getText()),
                 Double.parseDouble(tfValorUnitItemPedido.getText()),
-                Double.parseDouble(tfValorTotalItemPedido.getText())
+                Double.parseDouble(tfQuantidadeItemPedido.getText()) * Double.parseDouble(tfValorUnitItemPedido.getText())
             );
 
            try {
-                this.itemPedido = itemPedidoDTO;
+                listaItensPedido.set(index, itemPedidoDTO);
+                
                 criarInfoAlert("Sucesso!", "Item atualizado com sucesso.");
                 onVoltarClick();
            } catch (ProdutoInvalidoException e) {
@@ -70,11 +72,11 @@ public class ItemPedidoFormController extends Controller implements IFormControl
         }
         else {
             ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO(
-                0,
+                nPedido,
                 produtoMapper.toEntity(produtoSelecionado),
                 Integer.parseInt(tfQuantidadeItemPedido.getText()),
                 Double.parseDouble(tfValorUnitItemPedido.getText()),
-                Double.parseDouble(tfValorTotalItemPedido.getText())
+                Double.parseDouble(tfQuantidadeItemPedido.getText()) * Double.parseDouble(tfValorUnitItemPedido.getText())
             );
 
             try {
@@ -90,11 +92,11 @@ public class ItemPedidoFormController extends Controller implements IFormControl
 
     @Override
     public void setCampos(ItemPedidoDTO itemPedidoDTO) {
-        this.numPedido = itemPedidoDTO.nPedido();
         tfProdutoItemPedido.setText(itemPedidoDTO.getProdutoDTO().getNome());
         tfQuantidadeItemPedido.setText(String.valueOf(itemPedidoDTO.getQtd()));
-        tfValorUnitItemPedido.setText(String.valueOf(itemPedidoDTO.getValorUn()));
-        this.itemPedido = itemPedidoDTO;
+        tfValorUnitItemPedido.setText(String.valueOf(itemPedidoDTO.getValorUnit()));
+        tfValorTotalItemPedido.setText(String.valueOf(itemPedidoDTO.getValorTotal()));
+        produtoSelecionado = itemPedidoDTO.getProdutoDTO();
     }
 
     @Override
@@ -123,6 +125,15 @@ public class ItemPedidoFormController extends Controller implements IFormControl
         configurarAutocomplete();
     }
 
+    public void setCadastroFacade(CadastroFacade cadastroFacade){
+        this.cadastroFacade = cadastroFacade;
+    }
+
+    public void setIds(int index, int nPedido){
+        this.index = index;
+        this.nPedido = nPedido;
+    }
+
     private void configurarAutocomplete() {
         tfProdutoItemPedido.textProperty().addListener((obs, oldText, newText) -> {
             if(newText == null || newText.isBlank()){
@@ -146,6 +157,8 @@ public class ItemPedidoFormController extends Controller implements IFormControl
                             tfProdutoItemPedido.setText(f.getNome());
                             produtoSelecionado = f;
                             produtosMenu.hide();
+
+                            this.tfValorUnitItemPedido.setText(String.valueOf(f.getValorUn()));
                         });
 
                         return item;
@@ -154,13 +167,12 @@ public class ItemPedidoFormController extends Controller implements IFormControl
 
             produtosMenu.getItems().setAll(itens);
 
-            if(!produtosMenu.isShowing()){
-                Bounds bounds = tfProdutoItemPedido.localToScreen(tfProdutoItemPedido.getBoundsInLocal());
-                produtosMenu.show(tfProdutoItemPedido, bounds.getMinX(), bounds.getMaxY());
-            } else {
-                Bounds bounds = tfProdutoItemPedido.localToScreen(tfProdutoItemPedido.getBoundsInLocal());
-                produtosMenu.show(tfProdutoItemPedido, bounds.getMinX(), bounds.getMaxY());
-            }
+            Platform.runLater(() -> {
+                if(!produtosMenu.isShowing()){
+                    Bounds bounds = tfProdutoItemPedido.localToScreen(tfProdutoItemPedido.getBoundsInLocal());
+                    produtosMenu.show(tfProdutoItemPedido, bounds.getMinX(), bounds.getMaxY());
+                }
+            });
         });
     }
 
@@ -168,7 +180,7 @@ public class ItemPedidoFormController extends Controller implements IFormControl
         try {
             produtos = cadastroFacade.listarProdutos();
         } catch (SQLException e) {
-            criarErrorAlert("Erro ao acessar o banco de dados", "Não foi possível carregar os clientes:\n" + e.getMessage());
+            criarErrorAlert("Erro ao acessar o banco de dados", "Não foi possível carregar os produtos:\n" + e.getMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 package fatec.lanchoneteapp.application.service;
 
-import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
+import fatec.lanchoneteapp.application.repository.RepositoryListById;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Produto;
 
@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ItemPedidoService {
-    private final RepositoryNoReturn<ItemPedido> repository;
+    private final RepositoryListById<ItemPedido> repository;
 
-    public ItemPedidoService(RepositoryNoReturn<ItemPedido> repository) {
+    public ItemPedidoService(RepositoryListById<ItemPedido> repository) {
         this.repository = repository;
     }
 
@@ -61,12 +61,23 @@ public class ItemPedidoService {
     }
 
     /**
-     * Lista todos os itens de um pedido específico.
+     * Lista todos os itens de pedidos.
      *
      * @return uma lisa de ItemPedido 
      * @throws SQLException caso ocorra erro ao consultar o banco de dados
      */
     public List<ItemPedido> listarItens() throws SQLException {
         return repository.listar();
+    }
+
+     /**
+     * Lista todos os itens de um pedido específico.
+     *
+     * @param nPedido número do pedido para busca dos itens
+     * @return uma lisa de ItemPedido 
+     * @throws SQLException caso ocorra erro ao consultar o banco de dados
+     */
+    public List<ItemPedido> listarItensPorNumPedido(int nPedido) throws SQLException{
+        return repository.listarPorId(nPedido);
     }
 }

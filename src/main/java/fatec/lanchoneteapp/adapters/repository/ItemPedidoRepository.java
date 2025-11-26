@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
+import fatec.lanchoneteapp.application.repository.RepositoryListById;
 import fatec.lanchoneteapp.domain.entity.Categoria;
 import fatec.lanchoneteapp.domain.entity.ItemPedido;
 import fatec.lanchoneteapp.domain.entity.Produto;
 
-public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
+public class ItemPedidoRepository implements RepositoryListById<ItemPedido>{
     private Connection connection;
 
     public ItemPedidoRepository(Connection connection){
@@ -118,11 +118,57 @@ public class ItemPedidoRepository implements RepositoryNoReturn<ItemPedido>{
         sql.append("INNER JOIN Categoria c ");
         sql.append("ON p.ID_Categoria = c.ID");
         PreparedStatement ps = connection.prepareStatement(sql.toString());
+        
 
         List<ItemPedido> entidades = new ArrayList<>();
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next()){
+        while(rs.next()){
+            Categoria categoria = new Categoria();
+            categoria.setId(rs.getInt("ID_Categoria"));
+            categoria.setNome(rs.getString("Nome"));
+            categoria.setDescricao(rs.getString("Descricao"));
+            
+            Produto produto = new Produto();
+            produto.setId(rs.getInt("ID_Produto"));
+            produto.setNome(rs.getString("Nome_Produto"));
+            produto.setQntdEstoq(rs.getInt("QtdEstoque"));
+            produto.setValorUn(rs.getDouble("ValorUnit"));
+            produto.setCategoria(categoria);
+            
+            ItemPedido entidade = new ItemPedido();
+            entidade.setNumPedido(rs.getInt("Num_Pedido"));
+            entidade.setQtd(rs.getInt("Qtd"));
+            entidade.setValorUnit(rs.getDouble("ValorUnit"));
+            entidade.setValorTotal(rs.getDouble("ValorTotalItem"));
+            entidade.setProduto(produto);
+
+            entidades.add(entidade);
+        }
+
+        rs.close();
+        ps.close();
+        return entidades;
+    }
+
+    @Override
+    public List<ItemPedido> listarPorId(int nPedido) throws SQLException {
+         StringBuilder sql = new StringBuilder();
+        sql.append("SELECT ip.Num_Pedido, ip.Qtd, ip.ValorUnit, ip.ValorTotalItem, ");
+        sql.append("p.ID AS ID_Produto, p.Nome AS Nome_Produto, p.QtdEstoque, p.ValorUnit, ");
+        sql.append("c.ID AS ID_Categoria, c.Nome, c.Descricao ");
+        sql.append("FROM Item_Pedido ip INNER JOIN Produto p ");
+        sql.append("ON ip.ID_Produto = p.ID ");
+        sql.append("INNER JOIN Categoria c ");
+        sql.append("ON p.ID_Categoria = c.ID ");
+        sql.append("WHERE ip.Num_Pedido = ?");
+        PreparedStatement ps = connection.prepareStatement(sql.toString());
+        ps.setInt(1, nPedido);
+
+        List<ItemPedido> entidades = new ArrayList<>();
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()){
             Categoria categoria = new Categoria();
             categoria.setId(rs.getInt("ID_Categoria"));
             categoria.setNome(rs.getString("Nome"));

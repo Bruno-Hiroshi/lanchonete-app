@@ -25,7 +25,7 @@ public class ItemPedidoMapper {
                 dto.nPedido(),
                 dto.produto(),
                 dto.qtd(),
-                dto.valorUn(),
+                dto.valorUnit(),
                 dto.valorTotal()
         );
     }

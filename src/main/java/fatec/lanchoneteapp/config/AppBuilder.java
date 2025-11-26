@@ -7,14 +7,13 @@ import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import fatec.lanchoneteapp.application.facade.CadastroFacadeImpl;
 import fatec.lanchoneteapp.application.facade.PedidoFacade;
 import fatec.lanchoneteapp.application.facade.PedidoFacadeImpl;
+import fatec.lanchoneteapp.application.repository.RepositoryListById;
 import fatec.lanchoneteapp.application.repository.RepositoryNoReturn;
 import fatec.lanchoneteapp.application.repository.RepositoryReturn;
 import fatec.lanchoneteapp.application.service.*;
 import fatec.lanchoneteapp.domain.entity.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class AppBuilder {
 
@@ -42,7 +41,7 @@ public class AppBuilder {
     private final RepositoryNoReturn<Fornecedor> fornecedorRepository;
     private final RepositoryNoReturn<Funcionario> funcionarioRepository;
     private final RepositoryReturn<Produto> produtoRepository;
-    private final RepositoryNoReturn<ItemPedido> itemPedidoRepository;
+    private final RepositoryListById<ItemPedido> itemPedidoRepository;
 
     public AppBuilder() throws SQLException, ClassNotFoundException {
         c = new SQLServerConnection();

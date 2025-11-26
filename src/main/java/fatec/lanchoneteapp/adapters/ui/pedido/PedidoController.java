@@ -58,6 +58,7 @@ public class PedidoController extends Controller implements Initializable, ICont
 
         PedidoFormController controller = loader.getController();
         controller.setFacades(pedidoFacade, cadastroFacade);
+        controller.setCamposDefault();
 
         Stage stage = new Stage();
         stage.setTitle("Novo Pedido");
@@ -76,8 +77,9 @@ public class PedidoController extends Controller implements Initializable, ICont
         Parent form = loader.load();
 
         PedidoFormController controller = loader.getController();
-        controller.setFacades(pedidoFacade, cadastroFacade);
         controller.setCampos(pedido);
+        controller.setFacades(pedidoFacade, cadastroFacade);
+        
 
         Stage stage = new Stage();
         stage.setTitle("Atualizar Pedido");
@@ -158,11 +160,11 @@ public class PedidoController extends Controller implements Initializable, ICont
 
     @Override
     public void carregarTabela() {
-        tcNumPedido.setCellValueFactory(new PropertyValueFactory<>("num"));
+        tcNumPedido.setCellValueFactory(new PropertyValueFactory<>("nPedido"));
         tcValorTotalPedido.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
         tcDataPedido.setCellValueFactory(new PropertyValueFactory<>("dataPedido"));
         tcStatusPedido.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tcClientePedido.setCellValueFactory(new PropertyValueFactory<>("clienteNome"));
+        tcClientePedido.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
         tcAcoesPedido.setCellFactory(fabricanteColunaAcoes);
 
         try {

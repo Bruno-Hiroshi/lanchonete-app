@@ -10,6 +10,7 @@ public class FuncionarioMapper {
         }
 
         return new Funcionario(
+                dto.id(),
                 dto.nome(),
                 dto.tel(),
                 dto.email(),

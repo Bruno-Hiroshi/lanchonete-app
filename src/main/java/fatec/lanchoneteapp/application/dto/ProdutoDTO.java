@@ -22,6 +22,6 @@ public record ProdutoDTO(
     public double getValorUn() { return valorUn; }
     public CategoriaDTO getCategoriaDTO() { return categoriaMapper.toDTO(categoria); }
     public String getCategoriaNome() { return categoria.getNome(); }
-    public FornecedorDTO getFornecedor() { return fornecedorMapper.toDTO(fornecedor); }
+    public FornecedorDTO getFornecedorDTO() { return fornecedorMapper.toDTO(fornecedor); }
     public String getFornecedorNome() { return fornecedor.getNome(); }
 }

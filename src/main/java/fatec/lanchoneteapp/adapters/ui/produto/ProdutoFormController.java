@@ -3,18 +3,17 @@ package fatec.lanchoneteapp.adapters.ui.produto;
 import fatec.lanchoneteapp.adapters.ui.controller.Controller;
 import fatec.lanchoneteapp.adapters.ui.controller.IFormController;
 import fatec.lanchoneteapp.application.dto.*;
-import fatec.lanchoneteapp.application.exception.ClienteInvalidoException;
 import fatec.lanchoneteapp.application.exception.ProdutoInvalidoException;
 import fatec.lanchoneteapp.application.facade.CadastroFacade;
 import fatec.lanchoneteapp.application.mapper.CategoriaMapper;
 import fatec.lanchoneteapp.application.mapper.FornecedorMapper;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ProdutoFormController extends Controller implements IFormController<ProdutoDTO> {
@@ -100,7 +99,8 @@ public class ProdutoFormController extends Controller implements IFormController
         tfQtdEstoqueProduto.setText(String.valueOf(produto.getQtdEstoque()));
         tfValorUnitProduto.setText(String.valueOf(produto.getValorUn()));
         cbCategoriaProduto.setValue(produto.getCategoriaDTO());
-        tfFornecedorProduto.setText(String.valueOf(produto.getFornecedor().getNome()));
+        tfFornecedorProduto.setText(String.valueOf(produto.getFornecedorDTO().getNome()));
+        fornecedorSelecionado = produto.getFornecedorDTO();
     }
 
     @Override
@@ -167,13 +167,12 @@ public class ProdutoFormController extends Controller implements IFormController
 
             fornecedoresMenu.getItems().setAll(itens);
 
-            if(!fornecedoresMenu.isShowing()){
-                Bounds bounds = tfFornecedorProduto.localToScreen(tfFornecedorProduto.getBoundsInLocal());
-                fornecedoresMenu.show(tfFornecedorProduto, bounds.getMinX(), bounds.getMaxY());
-            } else {
-                Bounds bounds = tfFornecedorProduto.localToScreen(tfFornecedorProduto.getBoundsInLocal());
-                fornecedoresMenu.show(tfFornecedorProduto, bounds.getMinX(), bounds.getMaxY());
-            }
+            Platform.runLater(() -> {
+                if(!fornecedoresMenu.isShowing()){
+                    Bounds bounds = tfFornecedorProduto.localToScreen(tfFornecedorProduto.getBoundsInLocal());
+                    fornecedoresMenu.show(tfFornecedorProduto, bounds.getMinX(), bounds.getMaxY());
+                }
+            });
         });
     }
 
