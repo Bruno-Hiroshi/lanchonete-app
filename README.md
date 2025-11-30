@@ -6,18 +6,12 @@
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" />
   <img src="https://img.shields.io/github/last-commit/andrelamego/lanchonete-app?color=blue&style=flat-square" />
   <img src="https://img.shields.io/github/commit-activity/m/andrelamego/lanchonete-app?color=yellow&style=flat-square" />
-  <img src="https://img.shields.io/badge/status-Fase%20Inicial%20de%20Desenvolvimento-red?style=flat-square" />
+  <img src="https://img.shields.io/badge/status-Fase%20Final%20de%20Desenvolvimento-red?style=flat-square" />
 </p>
 
 ---
 
 Aplicação em Java para gerenciamento de uma lanchonete, incluindo controle de funcionários, cargos, produtos e pedidos.
-
-##  Status do Desenvolvimento
-
-🚧 O projeto encontra-se na fase **inicial de desenvolvimento**.  
-Novas funcionalidades, módulos e aprimoramentos arquiteturais ainda estão sendo planejados e implementados.
-
 
 ## Índice
 
@@ -39,14 +33,18 @@ O **App** tem como objetivo facilitar o controle operacional de uma lanchonete, 
 
 ## Funcionalidades
 
-Algumas funcionalidades previstas:
+Funcionalidades implementadas:
 
 - Cadastro e manutenção de cargos (ex.: atendente, cozinheiro, gerente)
 - Definição de salário e função para cada cargo
 - Cadastro de funcionários vinculados a cargos
 - Cadastro de produtos e categorias
 - Registro de pedidos e itens do pedido
+
+Funcionalidades previstas:
+
 - Geração de relatórios básicos
+- Dashboard personalizável
 
 ## Tecnologias
 
@@ -109,8 +107,6 @@ Abaixo estão os principais diagramas que representam a arquitetura e o fluxo da
 - **Java 23** instalado e configurado (`JAVA_HOME` e PATH)
 - Ferramenta de build:
   - Maven
-- IDE recomendada:
-  - IntelliJ IDEA, Eclipse, VS Code com extensão Java, ou outra de sua preferência
 
 ---
 ## Equipe de Desenvolvimento
@@ -123,8 +119,8 @@ Este projeto está sendo construído com dedicação por desenvolvedores comprom
 |----------------------|---------------------------------------------------------------------------|--------------------------------------------------------------|
 | **André Lamego**     | Organização do projeto, desenvolvimento backend, integrações e otimização | [github.com/andrelamego](https://github.com/andrelamego)     |
 | **Bruno Hiroshi**    | Arquitetura, regra de negócio e testes                                    | [github.com/Bruno-Hiroshi](https://github.com/Bruno-Hiroshi) |
-| **Gabriel de Negri** | Desenvolvimento frontend, regra de negócio e documentação técnica         | [github.com/Bielnegri](https://github.com/Bielnegri)         |
-| **Henrique Brito**   | Implementação de features, revisão e suporte técnico                      | [github.com/W7-Henri](https://github.com/W7-Henri)           |
+| **Gabriel de Negri** | Desenvolvimento frontend, desenvolvimento backend e documentação técnica  | [github.com/Bielnegri](https://github.com/Bielnegri)         |
+| **Henrique Brito**   | Desenvolvimento frontend, revisão e suporte técnico                       | [github.com/W7-Henri](https://github.com/W7-Henri)           |
 
 ## 📄 Licença
 Este projeto está licenciado sob os termos da **MIT License**.  
